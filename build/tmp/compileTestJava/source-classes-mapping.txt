@@ -1,0 +1,4 @@
+org/triathlongirls/springboot/web/dto/HelloResponseDtoTest.java
+ org.triathlongirls.springboot.web.dto.HelloResponseDtoTest
+org/triathlongirls/springboot/web/HelloControllerTest.java
+ org.triathlongirls.springboot.web.HelloControllerTest
