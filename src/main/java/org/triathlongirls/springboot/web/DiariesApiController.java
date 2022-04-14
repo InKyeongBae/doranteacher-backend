@@ -7,6 +7,7 @@ import org.triathlongirls.springboot.service.gcil.OcrService;
 import org.triathlongirls.springboot.web.dto.DiariesResponseDto;
 import org.triathlongirls.springboot.web.dto.DiariesSaveRequestDto;
 import org.triathlongirls.springboot.web.dto.DiariesUpdateRequestDto;
+import org.triathlongirls.springboot.web.dto.OcrDto;
 
 @RequiredArgsConstructor
 @RestController
@@ -31,8 +32,8 @@ public class DiariesApiController {
     }
 
     @GetMapping("/ocrtext")
-    public String ocrText(@RequestParam(value="filepath") String filepath) {
-        return ocrService.detectDocumentText(filepath);
+    public String ocrText(@RequestBody OcrDto ocrDto) {
+        return ocrService.detectDocumentText(ocrDto.getFilepath());
     }
 
 }
