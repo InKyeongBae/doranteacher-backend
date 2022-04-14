@@ -26,6 +26,7 @@ public class User extends BaseTimeEntity {
 
     private String password;
 
+    @Column(length =10)
     private String nickname;
 
     private short writingStep;

@@ -13,7 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.triathlongirls.springboot.domain.diaries.Diaries;
-import org.triathlongirls.springboot.domain.diaries.DiariesRepository;
+import org.triathlongirls.springboot.repository.DiariesRepository;
 import org.triathlongirls.springboot.web.dto.DiariesSaveRequestDto;
 import org.triathlongirls.springboot.web.dto.DiariesUpdateRequestDto;
 

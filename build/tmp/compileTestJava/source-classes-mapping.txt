@@ -1,4 +1,6 @@
-org/triathlongirls/springboot/web/dto/HelloResponseDtoTest.java
- org.triathlongirls.springboot.web.dto.HelloResponseDtoTest
-org/triathlongirls/springboot/web/HelloControllerTest.java
- org.triathlongirls.springboot.web.HelloControllerTest
+org/triathlongirls/springboot/domain/diaries/DiariesRepositoryTest.java
+ org.triathlongirls.springboot.domain.diaries.DiariesRepositoryTest
+org/triathlongirls/springboot/web/DiariesApiControllerTest.java
+ org.triathlongirls.springboot.web.DiariesApiControllerTest
+org/triathlongirls/springboot/service/diaries/UserServiceTest.java
+ org.triathlongirls.springboot.service.diaries.UserServiceTest
