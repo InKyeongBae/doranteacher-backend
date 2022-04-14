@@ -31,6 +31,9 @@ dependencies {
     implementation('com.h2database:h2')
 
     testImplementation('org.springframework.boot:spring-boot-starter-test')
+
+    implementation platform('com.google.cloud:libraries-bom:25.1.0')
+    implementation 'com.google.cloud:google-cloud-vision'
 }
 
 test {
