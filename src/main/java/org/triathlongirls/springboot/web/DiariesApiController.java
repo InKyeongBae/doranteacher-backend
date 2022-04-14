@@ -3,6 +3,7 @@ package org.triathlongirls.springboot.web;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.triathlongirls.springboot.service.diaries.DiariesService;
+import org.triathlongirls.springboot.service.gcil.OcrService;
 import org.triathlongirls.springboot.web.dto.DiariesResponseDto;
 import org.triathlongirls.springboot.web.dto.DiariesSaveRequestDto;
 import org.triathlongirls.springboot.web.dto.DiariesUpdateRequestDto;
@@ -12,6 +13,7 @@ import org.triathlongirls.springboot.web.dto.DiariesUpdateRequestDto;
 public class DiariesApiController {
 
     private final DiariesService diariesService;
+    private final OcrService ocrService;
 
     @PostMapping("/api/v1/diaries")
     public Long save(@RequestBody DiariesSaveRequestDto requestDto) {
@@ -26,5 +28,15 @@ public class DiariesApiController {
     @GetMapping("/api/v1/diaries/{id}")
     public DiariesResponseDto findById(@PathVariable Long id) {
         return diariesService.findById(id);
+    }
+
+    @GetMapping("/imgtotext")
+    public String imgToText(@RequestParam(value="filepath") String filepath) {
+        return ocrService.showText(filepath);
+    }
+
+    @GetMapping("/ocrtext")
+    public String ocrText(@RequestParam(value="filepath") String filepath) {
+        return ocrService.detectDocumentText(filepath);
     }
 }

@@ -27,6 +27,8 @@ org/triathlongirls/springboot/domain/user/User.java
 org/triathlongirls/springboot/web/dto/DiariesUpdateRequestDto.java
  org.triathlongirls.springboot.web.dto.DiariesUpdateRequestDto
  org.triathlongirls.springboot.web.dto.DiariesUpdateRequestDto$DiariesUpdateRequestDtoBuilder
+org/triathlongirls/springboot/service/gcil/OcrService.java
+ org.triathlongirls.springboot.service.gcil.OcrService
 org/triathlongirls/springboot/repository/UserRepository.java
  org.triathlongirls.springboot.repository.UserRepository
 org/triathlongirls/springboot/web/dto/DiariesSaveRequestDto.java
