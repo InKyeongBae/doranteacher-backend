@@ -30,13 +30,9 @@ public class DiariesApiController {
         return diariesService.findById(id);
     }
 
-    @GetMapping("/imgtotext")
-    public String imgToText(@RequestParam(value="filepath") String filepath) {
-        return ocrService.showText(filepath);
-    }
-
     @GetMapping("/ocrtext")
     public String ocrText(@RequestParam(value="filepath") String filepath) {
         return ocrService.detectDocumentText(filepath);
     }
+
 }

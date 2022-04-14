@@ -1,11 +1,16 @@
 org/triathlongirls/springboot/domain/diaries/DiaryType.java
  org.triathlongirls.springboot.domain.diaries.DiaryType
+org/triathlongirls/springboot/web/dto/DiariesSaveRequestDto.java
+ org.triathlongirls.springboot.web.dto.DiariesSaveRequestDto
+ org.triathlongirls.springboot.web.dto.DiariesSaveRequestDto$DiariesSaveRequestDtoBuilder
 org/triathlongirls/springboot/service/diaries/UserService.java
  org.triathlongirls.springboot.service.diaries.UserService
 org/triathlongirls/springboot/web/dto/DiariesResponseDto.java
  org.triathlongirls.springboot.web.dto.DiariesResponseDto
 org/triathlongirls/springboot/Application.java
  org.triathlongirls.springboot.Application
+org/triathlongirls/springboot/service/gcil/AsyncBatchAnnotateImages.java
+ org.triathlongirls.springboot.service.gcil.AsyncBatchAnnotateImages
 org/triathlongirls/springboot/domain/diaries/Image.java
  org.triathlongirls.springboot.domain.diaries.Image
 org/triathlongirls/springboot/service/diaries/DiariesService.java
@@ -15,8 +20,8 @@ org/triathlongirls/springboot/domain/diaries/Diaries.java
  org.triathlongirls.springboot.domain.diaries.Diaries$DiariesBuilder
 org/triathlongirls/springboot/repository/DiariesRepository.java
  org.triathlongirls.springboot.repository.DiariesRepository
-org/triathlongirls/springboot/web/DiariesApiController.java
- org.triathlongirls.springboot.web.DiariesApiController
+org/triathlongirls/springboot/repository/UserRepository.java
+ org.triathlongirls.springboot.repository.UserRepository
 org/triathlongirls/springboot/domain/BaseTimeEntity.java
  org.triathlongirls.springboot.domain.BaseTimeEntity
 org/triathlongirls/springboot/domain/diaries/Text.java
@@ -27,10 +32,7 @@ org/triathlongirls/springboot/domain/user/User.java
 org/triathlongirls/springboot/web/dto/DiariesUpdateRequestDto.java
  org.triathlongirls.springboot.web.dto.DiariesUpdateRequestDto
  org.triathlongirls.springboot.web.dto.DiariesUpdateRequestDto$DiariesUpdateRequestDtoBuilder
+org/triathlongirls/springboot/web/DiariesApiController.java
+ org.triathlongirls.springboot.web.DiariesApiController
 org/triathlongirls/springboot/service/gcil/OcrService.java
  org.triathlongirls.springboot.service.gcil.OcrService
-org/triathlongirls/springboot/repository/UserRepository.java
- org.triathlongirls.springboot.repository.UserRepository
-org/triathlongirls/springboot/web/dto/DiariesSaveRequestDto.java
- org.triathlongirls.springboot.web.dto.DiariesSaveRequestDto
- org.triathlongirls.springboot.web.dto.DiariesSaveRequestDto$DiariesSaveRequestDtoBuilder
