@@ -11,6 +11,7 @@ import org.triathlongirls.springboot.web.dto.OcrDto;
 
 @RequiredArgsConstructor
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 public class DiariesApiController {
 
     private final DiariesService diariesService;
@@ -31,8 +32,8 @@ public class DiariesApiController {
         return diariesService.findById(id);
     }
 
-    @GetMapping("/ocrtext")
-    public String ocrText(@RequestBody OcrDto ocrDto) {
+    @PostMapping("/ocrtext")
+    public OcrDto ocrText(@RequestBody OcrDto ocrDto) {
         return ocrService.detectDocumentText(ocrDto.getFilepath());
     }
 

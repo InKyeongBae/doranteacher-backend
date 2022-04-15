@@ -1,10 +1,11 @@
 package org.triathlongirls.springboot.web.dto;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Getter
+@Data
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class OcrDto {
     private String filepath;
 }

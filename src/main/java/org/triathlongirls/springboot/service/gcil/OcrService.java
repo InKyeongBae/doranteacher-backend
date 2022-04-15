@@ -7,12 +7,13 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.stereotype.Service;
+import org.triathlongirls.springboot.web.dto.OcrDto;
 
 import javax.xml.bind.DatatypeConverter;
 
 @Service
 public class OcrService {
-    public String detectDocumentText(String filePath) {
+    public OcrDto detectDocumentText(String filePath) {
         try {
             List<AnnotateImageRequest> requests = new ArrayList<>();
 
@@ -42,7 +43,8 @@ public class OcrService {
                 for (AnnotateImageResponse res : responses) {
                     if (res.hasError()) {
                         System.out.format("Error: %s%n", res.getError().getMessage());
-                        return "Error";
+                        OcrDto ocrDto = OcrDto.builder().filepath("Error").build();
+                        return ocrDto;
                     }
 
                     // For full list of available annotations, see http://g.co/cloud/vision/docs
@@ -75,14 +77,16 @@ public class OcrService {
                     }
 //                    System.out.println("%nComplete annotation:");
 //                    System.out.println(annotation.getText());
-                    return annotation.getText();
+                    OcrDto ocrDto = OcrDto.builder().filepath(annotation.getText()).build();
+                    return ocrDto;
                 }
             }
         }
         catch(Exception e) {
             e.printStackTrace();
         }
-        return "Error";
+        OcrDto ocrDto = OcrDto.builder().filepath("Error").build();
+        return ocrDto;
     }
 
 }

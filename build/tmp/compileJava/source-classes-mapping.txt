@@ -30,9 +30,10 @@ org/triathlongirls/springboot/web/dto/DiariesUpdateRequestDto.java
  org.triathlongirls.springboot.web.dto.DiariesUpdateRequestDto$DiariesUpdateRequestDtoBuilder
 org/triathlongirls/springboot/repository/UserRepository.java
  org.triathlongirls.springboot.repository.UserRepository
-org/triathlongirls/springboot/web/DiariesApiController.java
- org.triathlongirls.springboot.web.DiariesApiController
-org/triathlongirls/springboot/service/gcil/OcrService.java
- org.triathlongirls.springboot.service.gcil.OcrService
 org/triathlongirls/springboot/web/dto/OcrDto.java
  org.triathlongirls.springboot.web.dto.OcrDto
+ org.triathlongirls.springboot.web.dto.OcrDto$OcrDtoBuilder
+org/triathlongirls/springboot/service/gcil/OcrService.java
+ org.triathlongirls.springboot.service.gcil.OcrService
+org/triathlongirls/springboot/web/DiariesApiController.java
+ org.triathlongirls.springboot.web.DiariesApiController
