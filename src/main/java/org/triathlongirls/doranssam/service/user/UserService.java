@@ -5,7 +5,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.triathlongirls.doranssam.domain.user.User;
 import org.triathlongirls.doranssam.repository.UserRepository;
-import org.triathlongirls.doranssam.web.dto.UserResponseDto;
+import org.triathlongirls.doranssam.util.SecurityUtil;
+import org.triathlongirls.doranssam.dto.UserResponseDto;
 
 import java.util.Optional;
 

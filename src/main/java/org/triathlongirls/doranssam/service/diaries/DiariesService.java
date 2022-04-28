@@ -5,9 +5,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.triathlongirls.doranssam.domain.diaries.Diaries;
 import org.triathlongirls.doranssam.repository.DiariesRepository;
-import org.triathlongirls.doranssam.web.dto.DiariesResponseDto;
-import org.triathlongirls.doranssam.web.dto.DiariesSaveRequestDto;
-import org.triathlongirls.doranssam.web.dto.DiariesUpdateRequestDto;
+import org.triathlongirls.doranssam.dto.DiariesResponseDto;
+import org.triathlongirls.doranssam.dto.DiariesSaveRequestDto;
+import org.triathlongirls.doranssam.dto.DiariesUpdateRequestDto;
 
 @RequiredArgsConstructor
 @Service

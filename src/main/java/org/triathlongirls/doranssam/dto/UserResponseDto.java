@@ -1,4 +1,4 @@
-package org.triathlongirls.doranssam.web.dto;
+package org.triathlongirls.doranssam.dto;
 
 import lombok.Getter;
 import org.triathlongirls.doranssam.domain.user.User;
