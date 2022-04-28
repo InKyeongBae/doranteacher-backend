@@ -1,4 +1,4 @@
-package org.triathlongirls.springboot.domain.diaries;
+package org.triathlongirls.doranssam.domain.diaries;
 
 import lombok.Getter;
 

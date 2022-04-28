@@ -1,4 +1,4 @@
-package org.triathlongirls.springboot.web;
+package org.triathlongirls.doranssam.web;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -12,10 +12,10 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.triathlongirls.springboot.domain.diaries.Diaries;
-import org.triathlongirls.springboot.repository.DiariesRepository;
-import org.triathlongirls.springboot.web.dto.DiariesSaveRequestDto;
-import org.triathlongirls.springboot.web.dto.DiariesUpdateRequestDto;
+import org.triathlongirls.doranssam.domain.diaries.Diaries;
+import org.triathlongirls.doranssam.repository.DiariesRepository;
+import org.triathlongirls.doranssam.web.dto.DiariesSaveRequestDto;
+import org.triathlongirls.doranssam.web.dto.DiariesUpdateRequestDto;
 
 import java.util.List;
 

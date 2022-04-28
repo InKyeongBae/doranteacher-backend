@@ -1,13 +1,13 @@
-package org.triathlongirls.springboot.service.diaries;
+package org.triathlongirls.doranssam.service.diaries;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.triathlongirls.springboot.domain.diaries.Diaries;
-import org.triathlongirls.springboot.repository.DiariesRepository;
-import org.triathlongirls.springboot.web.dto.DiariesResponseDto;
-import org.triathlongirls.springboot.web.dto.DiariesSaveRequestDto;
-import org.triathlongirls.springboot.web.dto.DiariesUpdateRequestDto;
+import org.triathlongirls.doranssam.domain.diaries.Diaries;
+import org.triathlongirls.doranssam.repository.DiariesRepository;
+import org.triathlongirls.doranssam.web.dto.DiariesResponseDto;
+import org.triathlongirls.doranssam.web.dto.DiariesSaveRequestDto;
+import org.triathlongirls.doranssam.web.dto.DiariesUpdateRequestDto;
 
 @RequiredArgsConstructor
 @Service

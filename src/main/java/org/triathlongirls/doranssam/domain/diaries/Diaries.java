@@ -1,10 +1,10 @@
-package org.triathlongirls.springboot.domain.diaries;
+package org.triathlongirls.doranssam.domain.diaries;
 
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.triathlongirls.springboot.domain.BaseTimeEntity;
-import org.triathlongirls.springboot.domain.user.User;
+import org.triathlongirls.doranssam.domain.BaseTimeEntity;
+import org.triathlongirls.doranssam.domain.user.User;
 
 import javax.persistence.*;
 import java.time.LocalDate;

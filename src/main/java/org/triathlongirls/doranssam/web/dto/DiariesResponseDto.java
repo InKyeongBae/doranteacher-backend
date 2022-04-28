@@ -1,7 +1,7 @@
-package org.triathlongirls.springboot.web.dto;
+package org.triathlongirls.doranssam.web.dto;
 
 import lombok.Getter;
-import org.triathlongirls.springboot.domain.diaries.Diaries;
+import org.triathlongirls.doranssam.domain.diaries.Diaries;
 
 @Getter
 public class DiariesResponseDto {

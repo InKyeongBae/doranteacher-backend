@@ -1,9 +1,9 @@
-package org.triathlongirls.springboot.web.dto;
+package org.triathlongirls.doranssam.web.dto;
 
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.triathlongirls.springboot.domain.diaries.Diaries;
+import org.triathlongirls.doranssam.domain.diaries.Diaries;
 
 @Getter
 @NoArgsConstructor

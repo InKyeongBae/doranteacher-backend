@@ -1,4 +1,4 @@
-package org.triathlongirls.springboot.service.diaries;
+package org.triathlongirls.doranssam.service.diaries;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -6,8 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
-import org.triathlongirls.springboot.domain.user.User;
-import org.triathlongirls.springboot.repository.UserRepository;
+import org.triathlongirls.doranssam.domain.user.User;
+import org.triathlongirls.doranssam.repository.UserRepository;
+import org.triathlongirls.doranssam.service.user.UserService;
 
 import java.util.Optional;
 
@@ -18,7 +19,8 @@ import static org.junit.jupiter.api.Assertions.*;
 @Transactional
 class UserServiceTest {
 
-    @Autowired UserService userService;
+    @Autowired
+    UserService userService;
     @Autowired UserRepository userRepository;
     
     @Test

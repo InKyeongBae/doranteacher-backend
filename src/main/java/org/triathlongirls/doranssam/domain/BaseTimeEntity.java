@@ -1,4 +1,4 @@
-package org.triathlongirls.springboot.domain;
+package org.triathlongirls.doranssam.domain;
 
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;
