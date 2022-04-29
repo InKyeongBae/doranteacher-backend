@@ -1,5 +1,5 @@
 package org.triathlongirls.doranssam.dto;
-
+/*
 import lombok.Getter;
 import org.triathlongirls.doranssam.domain.diaries.Diaries;
 
@@ -14,3 +14,4 @@ public class DiariesResponseDto {
         this.title = entity.getTitle();
     }
 }
+*/

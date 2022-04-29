@@ -8,10 +8,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.triathlongirls.doranssam.domain.user.RefreshToken;
 import org.triathlongirls.doranssam.domain.user.User;
-import org.triathlongirls.doranssam.dto.JwtTokenDto;
-import org.triathlongirls.doranssam.dto.JwtTokenRequestDto;
-import org.triathlongirls.doranssam.dto.UserRequestDto;
-import org.triathlongirls.doranssam.dto.UserResponseDto;
+import org.triathlongirls.doranssam.dto.*;
 import org.triathlongirls.doranssam.jwt.JwtTokenProvider;
 import org.triathlongirls.doranssam.repository.RefreshTokenRepository;
 import org.triathlongirls.doranssam.repository.UserRepository;
@@ -38,10 +35,10 @@ public class AuthService {
     }
 
     @Transactional
-    public JwtTokenDto login(UserRequestDto UserRequestDto) {
+    public JwtTokenDto login(LoginDto loginDto) {
 
         // ID/PW 검증 후, 인증 정보로 JwtToken 생성
-        UsernamePasswordAuthenticationToken authenticationToken = UserRequestDto.toAuthentication();
+        UsernamePasswordAuthenticationToken authenticationToken = loginDto.toAuthentication();
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
         JwtTokenDto jwtTokenDto = jwtTokenProvider.generateTokenDto(authentication);
 

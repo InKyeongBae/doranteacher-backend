@@ -1,5 +1,5 @@
 package org.triathlongirls.doranssam.service.diaries;
-
+/*
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,3 +35,4 @@ public class DiariesService {
         return new DiariesResponseDto(entity);
     }
 }
+*/

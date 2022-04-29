@@ -1,5 +1,5 @@
 package org.triathlongirls.doranssam.controller;
-
+/*
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -89,3 +89,4 @@ public class DiariesApiControllerTest {
         assertThat(all.get(0).getTitle()).isEqualTo(expectedTitle);
     }
 }
+ */

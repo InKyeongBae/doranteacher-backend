@@ -1,6 +1,5 @@
 package org.triathlongirls.doranssam.jwt;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,12 +10,10 @@ import java.util.Collection;
 
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor
 public class CustomUserDetails implements UserDetails {
 
     private String username;
     private String password;
-    @Builder.Default
     private Collection<? extends GrantedAuthority> authorities;
 
     @Builder

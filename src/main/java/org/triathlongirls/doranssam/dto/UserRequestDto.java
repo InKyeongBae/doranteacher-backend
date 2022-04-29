@@ -11,7 +11,6 @@ import org.triathlongirls.doranssam.domain.user.User;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.Set;
 
 @Getter
 @AllArgsConstructor
@@ -24,7 +23,7 @@ public class UserRequestDto {
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @NotNull
-    @Size(min = 3, max = 100)
+    @Size(min = 4, max = 100)
     private String password;
 
     @NotNull
@@ -40,11 +39,7 @@ public class UserRequestDto {
                 .password(password)
                 .nickname(nickname)
                 .writingStep(writingStep)
-                .authority(Authority.ROLE_USER)
+                .authority(Authority.USER)
                 .build();
-    }
-
-    public UsernamePasswordAuthenticationToken toAuthentication() {
-        return new UsernamePasswordAuthenticationToken(username, password);
     }
 }

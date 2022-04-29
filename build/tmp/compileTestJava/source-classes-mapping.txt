@@ -1,6 +1,8 @@
-org/triathlongirls/springboot/domain/diaries/DiariesRepositoryTest.java
- org.triathlongirls.springboot.domain.diaries.DiariesRepositoryTest
-org/triathlongirls/springboot/web/DiariesApiControllerTest.java
- org.triathlongirls.springboot.web.DiariesApiControllerTest
-org/triathlongirls/springboot/service/diaries/UserServiceTest.java
- org.triathlongirls.springboot.service.diaries.UserServiceTest
+org/triathlongirls/doranssam/ApplicationTest.java
+ org.triathlongirls.doranssam.ApplicationTest
+org/triathlongirls/doranssam/BaseAuthApiTest.java
+ org.triathlongirls.doranssam.BaseAuthApiTest
+org/triathlongirls/doranssam/util/SecurityUtilTest.java
+ org.triathlongirls.doranssam.util.SecurityUtilTest
+org/triathlongirls/doranssam/controller/AuthApiControllerTest.java
+ org.triathlongirls.doranssam.controller.AuthApiControllerTest

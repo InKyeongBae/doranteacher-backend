@@ -25,7 +25,7 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public UserResponseDto getMyInfo() {
-        return userRepository.findById(SecurityUtil.getCurrentUserId())
+        return userRepository.findByUsername(SecurityUtil.getCurrentUsername())
                 .map(UserResponseDto::of)
                 .orElseThrow(() -> new RuntimeException("로그인 사용자 정보가 없습니다."));
     }

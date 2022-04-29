@@ -6,16 +6,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.triathlongirls.doranssam.dto.JwtTokenDto;
-import org.triathlongirls.doranssam.dto.JwtTokenRequestDto;
-import org.triathlongirls.doranssam.dto.UserRequestDto;
-import org.triathlongirls.doranssam.dto.UserResponseDto;
+import org.triathlongirls.doranssam.dto.*;
 import org.triathlongirls.doranssam.service.user.AuthService;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/v1/auth")
 @RequiredArgsConstructor
-public class AuthApiController {
+public class AuthApiController{
     private final AuthService authService;
 
     @PostMapping("/signup")
@@ -24,8 +21,8 @@ public class AuthApiController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<JwtTokenDto> login(@RequestBody UserRequestDto userRequestDto) {
-        return ResponseEntity.ok(authService.login(userRequestDto));
+    public ResponseEntity<JwtTokenDto> login(@RequestBody LoginDto loginDto) {
+        return ResponseEntity.ok(authService.login(loginDto));
     }
 
     @PostMapping("/reissue")
