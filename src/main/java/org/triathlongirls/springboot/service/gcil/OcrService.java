@@ -4,6 +4,9 @@ import com.google.cloud.vision.v1.Feature.Type;
 import com.google.protobuf.ByteString;
 
 import java.io.*;
+import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.stereotype.Service;
@@ -20,14 +23,15 @@ public class OcrService {
             String base64String = filePath;
             String[] strings = base64String.split(",");
             byte[] data = DatatypeConverter.parseBase64Binary(strings[1]);
-            String path = "/Users/inkyeong/Desktop/test.png";
-            File file = new File(path);
+
+            Path FILE_ROOT = Paths.get("./media/word.png").toAbsolutePath().normalize();
+
+            File file = new File(String.valueOf(FILE_ROOT));
             OutputStream outputStream = new BufferedOutputStream(new FileOutputStream(file));
             outputStream.write(data);
             outputStream.close();
 
-            String imageFilePath = "/Users/inkyeong/Desktop/test.png";
-            ByteString imgBytes = ByteString.readFrom(new FileInputStream(imageFilePath));
+            ByteString imgBytes = ByteString.readFrom(new FileInputStream(String.valueOf(FILE_ROOT)));
 
             Image img = Image.newBuilder().setContent(imgBytes).build();
             Feature feat = Feature.newBuilder().setType(Type.DOCUMENT_TEXT_DETECTION).setModel("builtin/latest").build();
@@ -59,24 +63,13 @@ public class OcrService {
                                     String wordText = "";
                                     for (Symbol symbol : word.getSymbolsList()) {
                                         wordText = wordText + symbol.getText();
-                                        System.out.format(
-//                                                "Symbol text: %s (confidence: %f)%n",
-                                                symbol.getText(), symbol.getConfidence());
                                     }
-                                    System.out.format(
-//                                            "Word text: %s (confidence: %f)%n%n", wordText, word.getConfidence());
-                                    paraText = String.format("%s %s", paraText, wordText));
                                 }
-                                // Output Example using Paragraph:
-//                                System.out.println("%nParagraph: %n" + paraText);
-//                                System.out.format("Paragraph Confidence: %f%n", para.getConfidence());
                                 blockText = blockText + paraText;
                             }
                             pageText = pageText + blockText;
                         }
                     }
-//                    System.out.println("%nComplete annotation:");
-//                    System.out.println(annotation.getText());
                     OcrDto ocrDto = OcrDto.builder().filepath(annotation.getText()).build();
                     return ocrDto;
                 }
