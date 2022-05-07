@@ -12,14 +12,14 @@ public class UserResponseDto {
     private Long id;
     private String username;
     private String nickname;
-    private short writingStep;
+    private int writingStep;
 
-    public static UserResponseDto of(User User) {
+    public static UserResponseDto of(User user) {
         return new UserResponseDto(
-                User.getId(),
-                User.getUsername(),
-                User.getNickname(),
-                User.getWritingStep()
+                user.getId(),
+                user.getUsername(),
+                user.getNickname(),
+                user.getWritingStep().getValue()
         );
     }
 }

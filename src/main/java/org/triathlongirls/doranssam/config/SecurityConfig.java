@@ -2,6 +2,10 @@ package org.triathlongirls.doranssam.config;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -14,47 +18,65 @@ import org.triathlongirls.doranssam.jwt.JwtAuthenticationEntryPoint;
 import org.triathlongirls.doranssam.jwt.JwtSecurityConfig;
 import org.triathlongirls.doranssam.jwt.JwtTokenProvider;
 
-@EnableWebSecurity
+@Configuration
 @RequiredArgsConstructor
+@EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
     private final JwtTokenProvider jwtTokenProvider;
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
+    private final CorsConfig corsConfig;
+
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http
+                .csrf().disable()
+                .exceptionHandling()
+                .authenticationEntryPoint(jwtAuthenticationEntryPoint)
+                .accessDeniedHandler(jwtAccessDeniedHandler)
+
+                .and()
+                .addFilter(corsConfig.corsFilter())
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+
+                .and()
+                .apply(new JwtSecurityConfig(jwtTokenProvider))
+
+                .and()
+                .formLogin().disable()
+                .httpBasic().disable()
+                .headers()
+                .frameOptions()
+                .sameOrigin()
+
+                .and()
+                .authorizeRequests()
+                .antMatchers("/auth/signup", "/auth/login").permitAll()
+                .anyRequest().authenticated();
+    }
+
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userDetailsServiceBean()).passwordEncoder(passwordEncoder());
+    }
+
+    @Override
+    public void configure(WebSecurity web) {
+        web.ignoring()
+                .antMatchers("/h2-console/**", "/favicon.ico");
+    }
+
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    @Override
-    public void configure(WebSecurity web) {
-        web.ignoring()
-                .antMatchers(
-                        "/h2-console/**"
-                        ,"/favicon.ico"
-                        ,"/error"
-                );
-    }
-
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.
-                csrf().disable()
-                .exceptionHandling()
-                .authenticationEntryPoint(jwtAuthenticationEntryPoint)
-                .accessDeniedHandler(jwtAccessDeniedHandler)
-                .and()
-                .headers()
-                .frameOptions()
-                .sameOrigin()
-                .and()
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .authorizeRequests()
-                .antMatchers("/v1/auth/**").permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .apply(new JwtSecurityConfig(jwtTokenProvider));
-    }
 }

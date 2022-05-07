@@ -8,7 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.triathlongirls.doranssam.BaseAuthApiTest;
-import org.triathlongirls.doranssam.dto.LoginDto;
+import org.triathlongirls.doranssam.dto.LoginRequestDto;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -22,20 +22,20 @@ class AuthApiControllerTest extends BaseAuthApiTest {
     @Test
     @WithMockUser(username = "username", password = "password", authorities = {"USER"})
     public void 사용자_로그인_성공() throws Exception {
-        LoginDto loginDto = new LoginDto("username", "password");
+        LoginRequestDto loginRequestDto = new LoginRequestDto("username", "password");
         this.mockMvc.perform(post("/v1/auth/login")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(loginDto)))
+                .content(objectMapper.writeValueAsString(loginRequestDto)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.username").value("username"));
     }
 
     @Test
     public void 사용자_로그인_실패_존재하지_않은_사용자() throws Exception {
-        LoginDto loginDto = new LoginDto("unknown", "password");
+        LoginRequestDto loginRequestDto = new LoginRequestDto("unknown", "password");
         this.mockMvc.perform(post("/v1/auth/login")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(loginDto)))
+                .content(objectMapper.writeValueAsString(loginRequestDto)))
                 .andExpect(status().isUnauthorized());
     }
 }

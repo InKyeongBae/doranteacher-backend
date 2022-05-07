@@ -35,13 +35,13 @@ public class CustomUserDetailsService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException(lowercaseUsername + " 사용자를 찾을 수 없습니다."));
     }
 
-    private CustomUserDetails createUserDetails(User user) {
-        GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(user.getAuthority().toString());
+    private CustomUserDetails createUserDetails(User member) {
+        GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(member.getAuthority().toString());
         Set<GrantedAuthority> authorities = Collections.singleton(grantedAuthority);
 
         return CustomUserDetails.builder()
-                .username(user.getUsername())
-                .password(user.getPassword())
+                .username(member.getUsername())
+                .password(member.getPassword())
                 .authorities(authorities)
                 .build();
     }

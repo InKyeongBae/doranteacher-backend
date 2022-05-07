@@ -5,11 +5,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.triathlongirls.doranssam.domain.BaseTimeEntity;
-//import org.triathlongirls.doranssam.domain.diaries.Diaries;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -32,7 +29,9 @@ public class User extends BaseTimeEntity {
     @Column(length = 15, nullable = false)
     private String nickname;
 
-    private short writingStep;
+    @Column(name = "writing_step")
+    @Enumerated(EnumType.STRING)
+    private WritingStep writingStep;
 
     @Enumerated(EnumType.STRING)
     private Authority authority;
@@ -43,11 +42,12 @@ public class User extends BaseTimeEntity {
     //private List<Diaries> diaries = new ArrayList<>();
 
     @Builder
-    public User(String username, String password, String nickname, short writingStep, Authority authority) {
+    public User(String username, String password, String nickname, WritingStep writingStep, Authority authority, boolean enabled) {
         this.username = username;
         this.password = password;
         this.nickname = nickname;
         this.writingStep = writingStep;
         this.authority = authority;
+        this.enabled = enabled;
     }
 }

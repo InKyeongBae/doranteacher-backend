@@ -9,19 +9,22 @@ import org.springframework.web.bind.annotation.RestController;
 import org.triathlongirls.doranssam.dto.*;
 import org.triathlongirls.doranssam.service.user.AuthService;
 
+import javax.validation.Valid;
+
 @RestController
-@RequestMapping("/v1/auth")
 @RequiredArgsConstructor
-public class AuthApiController{
+@RequestMapping("/auth")
+public class AuthApiController {
+
     private final AuthService authService;
 
     @PostMapping("/signup")
-    public ResponseEntity<UserResponseDto> signup(@RequestBody UserRequestDto userRequestDto) {
-        return ResponseEntity.ok(authService.signup(userRequestDto));
+    public ResponseEntity<UserResponseDto> signup(@Valid @RequestBody SignupRequestDto signupRequestDto) {
+        return ResponseEntity.ok(authService.signup(signupRequestDto));
     }
 
     @PostMapping("/login")
-    public ResponseEntity<JwtTokenDto> login(@RequestBody LoginDto loginDto) {
+    public ResponseEntity<JwtTokenDto> login(@Valid @RequestBody LoginRequestDto loginDto) {
         return ResponseEntity.ok(authService.login(loginDto));
     }
 

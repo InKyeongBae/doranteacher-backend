@@ -4,10 +4,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.triathlongirls.doranssam.domain.user.Authority;
 import org.triathlongirls.doranssam.domain.user.User;
+import org.triathlongirls.doranssam.domain.user.WritingStep;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -15,7 +15,7 @@ import javax.validation.constraints.Size;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserRequestDto {
+public class SignupRequestDto {
 
     @NotNull
     @Size(min = 2, max = 50)
@@ -24,22 +24,25 @@ public class UserRequestDto {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @NotNull
     @Size(min = 4, max = 100)
-    private String password;
+    private String password1;
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @NotNull
+    @Size(min = 4, max = 100)
+    private String password2;
 
     @NotNull
     @Size(min = 2, max = 15)
     private String nickname;
 
-    private short writingStep;
 
     public User toUser(PasswordEncoder passwordEncoder) {
-        this.password = passwordEncoder.encode(this.password);
         return User.builder()
                 .username(username)
-                .password(password)
+                .password(passwordEncoder.encode(password1))
                 .nickname(nickname)
-                .writingStep(writingStep)
-                .authority(Authority.USER)
+                .writingStep(WritingStep.Writing)
+                .authority(Authority.ROLE_USER)
                 .build();
     }
 }

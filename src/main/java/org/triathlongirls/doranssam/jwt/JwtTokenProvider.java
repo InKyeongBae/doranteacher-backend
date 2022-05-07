@@ -14,33 +14,29 @@ import org.springframework.stereotype.Component;
 import org.triathlongirls.doranssam.dto.JwtTokenDto;
 
 import java.security.Key;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Date;
+import java.util.*;
 import java.util.stream.Collectors;
+
+import static org.triathlongirls.doranssam.jwt.JwtProperties.*;
 
 @Slf4j
 @Component
 public class JwtTokenProvider {
 
-    private static final String AUTHORITIES_KEY = "triathlongirls";
-    private static final String BEARER_TYPE = "bearer";
-    private static final long ACCESS_TOKEN_EXPIRE_TIME = 60 * 60 * 1000L;           //1시간
-    private static final long REFRESH_TOKEN_EXPIRE_TIME = 1000 * 60 * 60 * 24 * 7;  //7일
-
-    private final CustomUserDetailsService customUserDetailsService;
     private final Key key;
 
-    public JwtTokenProvider(@Value("${jwt.secret}") String secretKey, CustomUserDetailsService customUserDetailsService) {
-        this.customUserDetailsService = customUserDetailsService;
+    public JwtTokenProvider(@Value("${jwt.secret}") String secretKey) {
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
         this.key = Keys.hmacShaKeyFor(keyBytes);
     }
 
     public JwtTokenDto generateTokenDto(Authentication authentication) {
+
+        Map<String, Object> payloads = new HashMap<>();
         String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
+        payloads.put(AUTHORITIES_KEY, authorities);
 
         long now = (new Date()).getTime();
 
@@ -60,7 +56,7 @@ public class JwtTokenProvider {
                 .compact();
 
         return JwtTokenDto.builder()
-                .grantType(BEARER_TYPE)
+                .grantType(TOKEN_PREFIX)
                 .accessToken(accessToken)
                 .accessTokenExpiresIn(accessTokenExpiresIn.getTime())
                 .refreshToken(refreshToken)

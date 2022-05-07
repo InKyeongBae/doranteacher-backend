@@ -25,20 +25,25 @@ public class AuthService {
     private final RefreshTokenRepository refreshTokenRepository;
 
     @Transactional
-    public UserResponseDto signup(UserRequestDto UserRequestDto) {
-        if (userRepository.existsByUsername(UserRequestDto.getUsername())) {
-            throw new RuntimeException("이미 가입한 사용자입니다");
+    public UserResponseDto signup(SignupRequestDto signupRequestDto) {
+        if (userRepository.existsByUsername(signupRequestDto.getUsername())) {
+            throw new RuntimeException("이미 가입한 사용자입니다.");
         }
 
-        User user = UserRequestDto.toUser(passwordEncoder);
+        // 비밀번호 일치 확인
+        if (!signupRequestDto.getPassword1().equals(signupRequestDto.getPassword2())) {
+            throw new RuntimeException("비밀번호가 일치하지 않습니다.");
+        }
+
+        User user = signupRequestDto.toUser(passwordEncoder);
         return UserResponseDto.of(userRepository.save(user));
     }
 
     @Transactional
-    public JwtTokenDto login(LoginDto loginDto) {
+    public JwtTokenDto login(LoginRequestDto loginRequestDto) {
 
         // ID/PW 검증 후, 인증 정보로 JwtToken 생성
-        UsernamePasswordAuthenticationToken authenticationToken = loginDto.toAuthentication();
+        UsernamePasswordAuthenticationToken authenticationToken = loginRequestDto.toAuthentication();
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
         JwtTokenDto jwtTokenDto = jwtTokenProvider.generateTokenDto(authentication);
 
