@@ -24,7 +24,7 @@ public class OcrService {
             byte[] data = DatatypeConverter.parseBase64Binary(strings[1]);
 
             Path FILE_ROOT = Paths.get("./media/word.png").toAbsolutePath().normalize();
-
+            System.out.println(FILE_ROOT);
             File file = new File(String.valueOf(FILE_ROOT));
             OutputStream outputStream = new BufferedOutputStream(new FileOutputStream(file));
             outputStream.write(data);
