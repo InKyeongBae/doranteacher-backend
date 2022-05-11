@@ -1,16 +1,15 @@
-package org.triathlongirls.springboot.service.gcil;
+package org.triathlongirls.doranssam.service;
 import com.google.cloud.vision.v1.*;
 import com.google.cloud.vision.v1.Feature.Type;
 import com.google.protobuf.ByteString;
 
 import java.io.*;
-import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.stereotype.Service;
-import org.triathlongirls.springboot.web.dto.OcrDto;
+import org.triathlongirls.doranssam.dto.OcrDto;
 
 import javax.xml.bind.DatatypeConverter;
 

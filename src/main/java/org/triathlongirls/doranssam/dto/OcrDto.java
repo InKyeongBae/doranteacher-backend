@@ -1,4 +1,4 @@
-package org.triathlongirls.springboot.web.dto;
+package org.triathlongirls.doranssam.dto;
 
 import lombok.*;
 

@@ -1,9 +1,9 @@
-package org.triathlongirls.springboot;
+package org.triathlongirls.doranssam.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import org.triathlongirls.springboot.service.gcil.OcrService;
-import org.triathlongirls.springboot.web.dto.OcrDto;
+import org.triathlongirls.doranssam.service.OcrService;
+import org.triathlongirls.doranssam.dto.OcrDto;
 
 @RequiredArgsConstructor
 @RestController
