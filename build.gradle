@@ -1,12 +1,12 @@
 plugins {
-    id 'org.springframework.boot' version '2.4.1'
-    id 'io.spring.dependency-management' version '1.0.10.RELEASE'
+    id 'org.springframework.boot' version '2.6.6'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
 }
 
 group 'org.triathlongirls'
-version '1.0.4-SNAPSHOT-'+new Date().format("yyyyMMddHHmmss")
-sourceCompatibility = 1.8
+version '0.0.1-SNAPSHOT-'+new Date().format("yyyyMMddHHmmss")
+sourceCompatibility = '11'
 
 repositories {
     mavenCentral()
@@ -28,12 +28,14 @@ dependencies {
     implementation('org.springframework.boot:spring-boot-starter-validation')
     implementation('io.jsonwebtoken:jjwt-api:0.11.2')
     implementation('com.h2database:h2')
-    implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.4'
+    implementation ('com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.4')
+    implementation ('org.apache.commons:commons-lang3:3.12.0')
+    implementation ('commons-io:commons-io:2.11.0')
     runtimeOnly('io.jsonwebtoken:jjwt-impl:0.11.2')
     runtimeOnly('io.jsonwebtoken:jjwt-jackson:0.11.2')
     runtimeOnly('mysql:mysql-connector-java')
     testImplementation('org.springframework.boot:spring-boot-starter-test')
-    testImplementation 'org.springframework.security:spring-security-test'
+    testImplementation ('org.springframework.security:spring-security-test')
     annotationProcessor ('org.springframework.boot:spring-boot-configuration-processor')
 }
 
