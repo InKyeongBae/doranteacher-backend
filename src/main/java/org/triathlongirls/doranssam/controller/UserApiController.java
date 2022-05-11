@@ -1,13 +1,14 @@
 package org.triathlongirls.doranssam.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.triathlongirls.doranssam.service.user.UserService;
+import org.springframework.web.bind.annotation.*;
+import org.triathlongirls.doranssam.dto.ApiResponse;
+import org.triathlongirls.doranssam.dto.UserRequestDto;
 import org.triathlongirls.doranssam.dto.UserResponseDto;
+import org.triathlongirls.doranssam.service.user.UserService;
+
+import javax.validation.Valid;
+import java.util.List;
 
 @RequiredArgsConstructor
 @RequestMapping("/user")
@@ -16,12 +17,12 @@ public class UserApiController {
     private final UserService userService;
 
     @GetMapping("/me")
-    public ResponseEntity<UserResponseDto> getMyUserinfo() {
-        return ResponseEntity.ok(userService.getMyInfo());
+    public ApiResponse<UserResponseDto> getMyUserinfo() {
+        return new ApiResponse<UserResponseDto>().ok(List.of(userService.getMyInfo()));
     }
 
-    @GetMapping("/{username}")
-    public ResponseEntity<UserResponseDto> getUserInfo(@PathVariable String username) {
-        return ResponseEntity.ok(userService.getUserInfo(username));
+    @PatchMapping("/me")
+    public ApiResponse<UserResponseDto> updateWritingStep(@Valid @RequestBody UserRequestDto userRequestDto) {
+        return new ApiResponse<UserResponseDto>().ok(List.of(userService.patchUser(userRequestDto)));
     }
 }

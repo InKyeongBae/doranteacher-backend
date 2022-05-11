@@ -50,4 +50,12 @@ public class User extends BaseTimeEntity {
         this.authority = authority;
         this.enabled = enabled;
     }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public void setWritingStep(WritingStep writingStep) {
+        this.writingStep = writingStep;
+    }
 }
