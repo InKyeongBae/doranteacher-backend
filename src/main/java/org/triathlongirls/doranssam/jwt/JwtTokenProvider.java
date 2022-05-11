@@ -12,6 +12,8 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.triathlongirls.doranssam.dto.JwtTokenDto;
+import org.triathlongirls.doranssam.exception.DoranssamErrorCode;
+import org.triathlongirls.doranssam.exception.JwtException;
 
 import java.security.Key;
 import java.util.*;
@@ -67,7 +69,7 @@ public class JwtTokenProvider {
         Claims claims = parseClaims(accessToken);
 
         if (claims.get(AUTHORITIES_KEY) == null) {
-            throw new RuntimeException("권한 정보가 없는 토큰입니다.");
+            throw new JwtException("권한 정보가 없는 토큰입니다.", DoranssamErrorCode.WRONG_TOKEN);
         }
 
         Collection<? extends GrantedAuthority> authorities =
