@@ -9,11 +9,15 @@ import org.springframework.stereotype.Service;
 import org.triathlongirls.doranssam.domain.user.RefreshToken;
 import org.triathlongirls.doranssam.domain.user.User;
 import org.triathlongirls.doranssam.dto.*;
+import org.triathlongirls.doranssam.exception.InvalidValueException;
+import org.triathlongirls.doranssam.exception.JwtException;
 import org.triathlongirls.doranssam.jwt.JwtTokenProvider;
 import org.triathlongirls.doranssam.repository.RefreshTokenRepository;
 import org.triathlongirls.doranssam.repository.UserRepository;
 
 import javax.transaction.Transactional;
+
+import static org.triathlongirls.doranssam.exception.DoranssamErrorCode.*;
 
 @RequiredArgsConstructor
 @Service
@@ -27,12 +31,12 @@ public class AuthService {
     @Transactional
     public UserResponseDto signup(SignupRequestDto signupRequestDto) {
         if (userRepository.existsByUsername(signupRequestDto.getUsername())) {
-            throw new RuntimeException("이미 가입한 사용자입니다.");
+            throw new InvalidValueException("이미 가입한 사용자입니다.", USERNAME_DUPLICATION);
         }
 
         // 비밀번호 일치 확인
         if (!signupRequestDto.getPassword1().equals(signupRequestDto.getPassword2())) {
-            throw new RuntimeException("비밀번호가 일치하지 않습니다.");
+            throw new InvalidValueException("비밀번호가 일치하지 않습니다.", PASSWORD_NOT_SAME);
         }
 
         User user = signupRequestDto.toUser(passwordEncoder);
@@ -63,13 +67,13 @@ public class AuthService {
 
         // RefreshToken 검증 후, 인증 정보로 대조
         if (!jwtTokenProvider.validateToken(jwtTokenRequestDto.getRefreshToken())) {
-            throw new RuntimeException("Refresh Token 이 유효하지 않습니다.");
+            throw new JwtException("invalid refresh token", WRONG_TOKEN);
         }
         Authentication authentication = jwtTokenProvider.getAuthentication(jwtTokenRequestDto.getAccessToken());
         RefreshToken refreshToken = refreshTokenRepository.findByKey(authentication.getName())
-                .orElseThrow(() -> new RuntimeException("로그아웃 된 사용자입니다."));
+                .orElseThrow(() -> new JwtException("blacklisted token", BLACKLISTED_TOKEN));
         if (!refreshToken.getValue().equals(jwtTokenRequestDto.getRefreshToken())) {
-            throw new RuntimeException("토큰의 유저 정보가 일치하지 않습니다.");
+            throw new JwtException("user not match with token", WRONG_TOKEN);
         }
 
         // JwtToken 재발행
