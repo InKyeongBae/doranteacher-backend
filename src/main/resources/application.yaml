@@ -13,7 +13,8 @@ spring:
     console:
       enabled: true
 jwt:
-  secret: ENC(JCtaXAeDbP1veVejOadQQzLRVhVPLiBW1dMqkh5CdLuGjLJ/Tj5tsaDvWtEswKRNA8ZU/OxOZLWJWnZlaM7KyLCNrUSgHrklLLWhEI61OB+tqR+3SiMlSVvWITUItRZ9dZjfiyfBZ0MogXUYzgwUcA==)
+  secret: ENC(tWZKnfhTfDvBp2Vj2D9D6OE/NU4hqozD+2SyI0m/vQc3SsWH/fwRlO7ZJOIvyIAwB920yuUr13ij0dkmyBtIk5FqeGxaS3xaYXM29gFMfs1zaAJfbGCEOWlsPqMOlqIosuhseIeOZmg=)
 jasypt:
   encryptor:
-    password: doranssam
+    bean: jasyptStringEncryptor
+    password : ${JASYPT_PASSWORD}

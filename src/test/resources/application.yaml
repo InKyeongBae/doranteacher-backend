@@ -13,4 +13,7 @@ spring:
     console:
       enabled: true
 jwt:
-  secret: d2UtYXJlLXRyaWF0bG9uLWdpcmxzLXdoby1jbGltZWQtR3dhbmFrLW1vdW50YWluLWFuZC1tYWtpbmctZG9yYW5zc2FtCg==
+  secret: ENC(JCtaXAeDbP1veVejOadQQzLRVhVPLiBW1dMqkh5CdLuGjLJ/Tj5tsaDvWtEswKRNA8ZU/OxOZLWJWnZlaM7KyLCNrUSgHrklLLWhEI61OB+tqR+3SiMlSVvWITUItRZ9dZjfiyfBZ0MogXUYzgwUcA==)
+jasypt:
+  encryptor:
+    password: doranssam

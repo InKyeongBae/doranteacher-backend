@@ -1,6 +1,5 @@
 package org.triathlongirls.doranssam.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,12 +20,10 @@ public class SignupRequestDto {
     @Size(min = 2, max = 50)
     private String username;
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @NotNull
     @Size(min = 4, max = 100)
     private String password1;
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @NotNull
     @Size(min = 4, max = 100)
     private String password2;
