@@ -1,5 +1,5 @@
 package org.triathlongirls.doranssam.domain.diaries;
-/*
+
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,12 +27,17 @@ public class Diaries extends BaseTimeEntity {
     @Column(length = 45)
     private String weather;
 
+    @Column
+    private String keywords;
+
     @Enumerated(EnumType.STRING)
     private DiaryType diaryType;
 
-    private Boolean is_private;
+    private Boolean isPrivate;
 
-    private Boolean want_to_correct;
+    private Boolean wantToCorrect;
+
+    private Boolean hasImage;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name= "user_id")
@@ -44,14 +49,24 @@ public class Diaries extends BaseTimeEntity {
     }
 
     @Builder
-    public Diaries(String title, LocalDate date, String weather, DiaryType diaryType, Boolean is_private, Boolean want_to_correct, User user) {
+    public Diaries(
+            String title,
+            LocalDate date,
+            String weather,
+            String keywords,
+            DiaryType diaryType,
+            Boolean isPrivate,
+            Boolean wantToCorrect,
+            Boolean hasImage,
+            User user) {
         this.title = title;
         this.date = date;
         this.weather = weather;
+        this.keywords = keywords;
         this.diaryType = diaryType;
-        this.is_private = is_private;
-        this.want_to_correct = want_to_correct;
+        this.isPrivate = isPrivate;
+        this.wantToCorrect = wantToCorrect;
+        this.hasImage = hasImage;
         setUser(user);
     }
 }
-*/

@@ -1,5 +1,5 @@
 package org.triathlongirls.doranssam.domain.diaries;
-/*
+
 import lombok.Getter;
 
 @Getter
@@ -27,4 +27,3 @@ public enum DiaryType {
     }
     private final String key;
 }
-*/

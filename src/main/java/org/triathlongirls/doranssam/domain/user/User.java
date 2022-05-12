@@ -5,8 +5,11 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.triathlongirls.doranssam.domain.BaseTimeEntity;
+import org.triathlongirls.doranssam.domain.diaries.Diaries;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -38,8 +41,8 @@ public class User extends BaseTimeEntity {
 
     private boolean enabled;
 
-    //@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    //private List<Diaries> diaries = new ArrayList<>();
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Diaries> diaries = new ArrayList<>();
 
     @Builder
     public User(String username, String password, String nickname, WritingStep writingStep, Authority authority, boolean enabled) {
