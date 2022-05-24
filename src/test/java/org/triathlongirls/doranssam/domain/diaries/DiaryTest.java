@@ -35,7 +35,7 @@ class DiaryTest {
 
     @Test
     @DisplayName("일기 일기글 엔티티 매핑 조회 테스트")
-    public void findDiaryAndTextTest() throws Exception {
+    public void findDiaryAndTextTest() {
         User user = new SignupRequestDto(
                 "username",
                 "1234",

@@ -31,12 +31,20 @@ public class Text extends BaseTimeEntity {
 
     private boolean hasSynonym;
 
+    @OneToOne
+    @JoinColumn(name = "comment_id")
+    private Comment comment;
+
     @Builder
     public Text(String originalText, String correctText, String highlightedText, boolean hasSynonym, Diary diary) {
         this.originalText = originalText;
         this.correctText = correctText;
         this.highlightedText = highlightedText;
         this.hasSynonym = hasSynonym;
+    }
+
+    public void setComment(Comment comment) {
+        this.comment = comment;
     }
 }
 
