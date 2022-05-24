@@ -1,4 +1,4 @@
-package org.triathlongirls.doranssam.domain.diaries;
+package org.triathlongirls.doranssam.constant;
 
 import lombok.Getter;
 

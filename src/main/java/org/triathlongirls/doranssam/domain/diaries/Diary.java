@@ -3,16 +3,20 @@ package org.triathlongirls.doranssam.domain.diaries;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
+import org.triathlongirls.doranssam.constant.DiaryType;
 import org.triathlongirls.doranssam.domain.BaseTimeEntity;
 import org.triathlongirls.doranssam.domain.user.User;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
+@Entity
 @Getter
 @NoArgsConstructor
-@Entity
-public class Diaries extends BaseTimeEntity {
+@ToString
+@Table(name = "diaries")
+public class Diary extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,18 +47,23 @@ public class Diaries extends BaseTimeEntity {
     @JoinColumn(name= "user_id")
     private User user;
 
+    @OneToOne
+    @JoinColumn(name = "text_id")
+    private Text text;
+
     public void setUser(User user) {
         this.user = user;
         user.getDiaries().add(this);
     }
 
     @Builder
-    public Diaries(
+    public Diary(
             String title,
             LocalDate date,
             String weather,
             String keywords,
             DiaryType diaryType,
+            Text text,
             Boolean isPrivate,
             Boolean wantToCorrect,
             Boolean hasImage,
@@ -64,6 +73,7 @@ public class Diaries extends BaseTimeEntity {
         this.weather = weather;
         this.keywords = keywords;
         this.diaryType = diaryType;
+        this.text = text;
         this.isPrivate = isPrivate;
         this.wantToCorrect = wantToCorrect;
         this.hasImage = hasImage;

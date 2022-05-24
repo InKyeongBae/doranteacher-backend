@@ -5,17 +5,6 @@ spring:
       hibernate:
         dialect : org.hibernate.dialect.MySQL57Dialect
         storage_engine: innodb
-  datasource:
-    hikari:
-      jdbc-url: jdbc:h2:mem:testdb;MODE=MYSQL
-      username: sa
-#      jdbc-url: jdbc:mysql:doranteacher-springboot-webservice.c8dbmoyeyryd.ap-northeast-2.rds.amazonaws.com:3306:doranteacher
-#      username: doran
-#      password: ehfksToa2022!
-#      driver-class-name: com.mysql.cj.jdbc.Driver
-  h2:
-    console:
-      enabled: true
 jwt:
   secret: ENC(5DI/RpPe9j/mhmsfLc2BOToD5TIDseB5BoOgY4CsgV2LzYAsRu1Cd8w0fCkBvclJMdnenx6vCCGPGOtXAR1GTniL/V+AltIpFCxzGKho7vDICa5K2I+PRIBBSirnAQ8iYxdNI2vWfa1MTZ8OQ1XP8HB1keowbRP9kBZPWKndzcNpY//59PeoLRQ9IoAj2gi4IDsd4GJVDYQ=)
 jasypt:
