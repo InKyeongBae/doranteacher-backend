@@ -41,6 +41,8 @@ public class Diary extends BaseTimeEntity {
 
     private Boolean wantToCorrect;
 
+    private Boolean wantToImage;
+
     private Boolean hasImage;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -70,6 +72,7 @@ public class Diary extends BaseTimeEntity {
             Text text,
             Boolean isPrivate,
             Boolean wantToCorrect,
+            Boolean wantToImage,
             Boolean hasImage,
             User user) {
         this.title = title;
@@ -80,6 +83,7 @@ public class Diary extends BaseTimeEntity {
         this.text = text;
         this.isPrivate = isPrivate;
         this.wantToCorrect = wantToCorrect;
+        this.wantToImage = wantToImage;
         this.hasImage = hasImage;
         setUser(user);
     }

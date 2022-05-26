@@ -2,10 +2,7 @@ package org.triathlongirls.doranssam.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import org.triathlongirls.doranssam.dto.ApiResponse;
-import org.triathlongirls.doranssam.dto.DiaryDetailResponseDto;
-import org.triathlongirls.doranssam.dto.DiarySaveResponseDto;
-import org.triathlongirls.doranssam.dto.DiarySaveRequestDto;
+import org.triathlongirls.doranssam.dto.*;
 import org.triathlongirls.doranssam.service.diaries.DiaryService;
 
 import javax.validation.Valid;
@@ -21,6 +18,12 @@ public class DiaryApiController {
     @PostMapping("")
     public ApiResponse<DiarySaveResponseDto> createDiary(@Valid @RequestBody DiarySaveRequestDto requestDto) {
         return new ApiResponse<DiarySaveResponseDto>().ok(List.of(diaryService.save(requestDto)));
+    }
+
+    @GetMapping("")
+    public ApiResponse<DiaryCatalogDetailDto> findByYearMonth(@RequestParam Integer year, @RequestParam Integer month) {
+        List<DiaryCatalogDetailDto> diaryCatalogDetails = diaryService.findByYearMonth(year, month);
+        return new ApiResponse<DiaryCatalogDetailDto>().ok(diaryCatalogDetails);
     }
 
     @GetMapping("/{id}")
