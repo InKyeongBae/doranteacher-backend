@@ -42,9 +42,10 @@ public class DiarySaveRequestDto {
 
     @NotNull(message = "맞춤범 교정 설정은 필수 입력 값입니다.")
     private Boolean wantToCorrect;
-
-    @NotNull(message = "이미지 설정은 필수 입력 값입니다.")
-    private Boolean hasImage;
+    
+    @NotNull(message = "이미지 추천 설정은 필수 입력 값입니다.")
+    private Boolean wantToImage;
+    
 
     public Diary toEntity(User user) {
         Text text = Text.builder()
@@ -63,7 +64,8 @@ public class DiarySaveRequestDto {
                 .text(text)
                 .isPrivate(isPrivate)
                 .wantToCorrect(wantToCorrect)
-                .hasImage(hasImage)
+                .wantToImage(wantToImage)
+                .hasImage(false)
                 .user(user)
                 .build();
     }

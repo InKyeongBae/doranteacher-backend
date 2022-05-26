@@ -2,18 +2,20 @@ package org.triathlongirls.doranssam.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Setter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
-@Getter @Setter
+@Getter
 @AllArgsConstructor
+@NoArgsConstructor
 public class DiaryCatalogDetailDto {
 
-    private Long diary_id;
-
-    private LocalDate diary_date;
-
-    private String imgUrl;
+    private Long diaryId;
+    private LocalDate diaryDate;
+    private String diaryImgUrl;
+    private LocalDateTime diaryCreatedAt;
+    private LocalDateTime diaryUpdatedAt;
 
 }
