@@ -5,11 +5,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.triathlongirls.doranssam.domain.user.User;
 
+import java.time.LocalDateTime;
+
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserResponseDto {
     private Long id;
+    private LocalDateTime created_at;
+    private LocalDateTime updated_at;
     private String username;
     private String nickname;
     private int writingStep;
@@ -17,6 +21,8 @@ public class UserResponseDto {
     public static UserResponseDto of(User user) {
         return new UserResponseDto(
                 user.getId(),
+                user.getCreated_at(),
+                user.getUpdated_at(),
                 user.getUsername(),
                 user.getNickname(),
                 user.getWritingStep().getValue()

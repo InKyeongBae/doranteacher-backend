@@ -22,11 +22,12 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
         response.setContentType("application/json;charset=UTF-8");
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         response.getWriter().println(
-                "{ \"message\" : \"" + code.getMessage()
-                        + "\", \"status\" : " + code.getStatus()
-                        + ", \"errors\" : []"
+                "{ \"status\" {"
                         + ", \"code\" : \"" + code.getCode()
-                        + "\" }");
+                        + "{ \"message\" : \"" + code.getMessage()
+                        + "\"},"
+                        + "\"results\" : " + null
+                        + "}");
 
     }
 }
