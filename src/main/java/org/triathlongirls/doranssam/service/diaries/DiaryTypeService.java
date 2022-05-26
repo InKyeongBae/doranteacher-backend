@@ -4,9 +4,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.triathlongirls.doranssam.constant.DiaryType;
 import org.triathlongirls.doranssam.dto.DiaryTypeRecommendResult;
+import org.triathlongirls.doranssam.util.dl4j.Word2VecUtil;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.FileNotFoundException;
+import java.io.UnsupportedEncodingException;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -16,22 +18,27 @@ public class DiaryTypeService {
 
 
     public List<DiaryTypeRecommendResult> recommendDiaryType(String keywords) {
-        String[] keywordList = keywords.split(",");
-
-        List<DiaryTypeRecommendResult> results = new ArrayList<>();
+        List<String> keywordList = Arrays.asList(keywords.split(","));
         List<String> diaryTypeList = Stream.of(DiaryType.values())
                 .map(Enum::name)
                 .collect(Collectors.toList());
 
-        Integer rank = 1;
-        for (String diaryType: diaryTypeList) {
-            results.add(new DiaryTypeRecommendResult(
-                    diaryType,
-                    rank
-            ));
-            rank++;
+        List<DiaryTypeRecommendResult> results = new ArrayList<>();
+        try {
+            HashMap<String, Double> wordMap = Word2VecUtil.calculateSimilarity(diaryTypeList, keywordList);
+            Iterator<Map.Entry<String, Double>> entries = wordMap.entrySet().iterator();
+            while(entries.hasNext()){
+                Map.Entry<String, Double> entry = entries.next();
+                results.add(new DiaryTypeRecommendResult(
+                        entry.getKey(),
+                        entry.getValue()
+                ));
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
         }
-
         return results;
     }
 }
