@@ -25,7 +25,7 @@ class TextTest {
     @Test
     public void findTextAndComment() {
         Comment comment = new Comment();
-        comment.setText("comment"); //TODO: comment AI api
+        comment.setContent("comment"); //TODO: comment AI api
         commentRepository.save(comment);
 
         Text text = Text.builder()
