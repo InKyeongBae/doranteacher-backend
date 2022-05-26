@@ -12,9 +12,9 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class DiarySaveResponseDto {
 
-    private Long diary_id;
-    private LocalDateTime created_at;
-    private LocalDateTime updated_at;
+    private Long diaryId;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
     private String username;
     private String nickname;
 

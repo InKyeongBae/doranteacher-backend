@@ -55,7 +55,7 @@ public class DiaryService {
         return true;
     }
 
-    public List<DiaryCatalogDetailDto> findByYearMonth(Integer year, Integer month) {
+    public List<DiaryCatalogDetailDto> findCatalogByYearMonth(Integer year, Integer month) {
         String username = SecurityUtil.getCurrentUsername();
         User user = userService.findByUsername(username)
                 .orElseThrow(() -> new EntityNotFoundException("사용자가 존재하지 않습니다.: " + username));
@@ -75,5 +75,19 @@ public class DiaryService {
             );
         }
         return diaryCatalogDetails;
+    }
+
+    public List<DiaryDetailResponseDto> findBookByYearMonth(Integer year, Integer month) {
+        String username = SecurityUtil.getCurrentUsername();
+        User user = userService.findByUsername(username)
+                .orElseThrow(() -> new EntityNotFoundException("사용자가 존재하지 않습니다.: " + username));
+
+        List<Diary> diaryList = diaryRepository.findByYearMonth(year, month, user.getId());
+
+        List<DiaryDetailResponseDto> diaryDetails = new ArrayList<>();
+        for (Diary diary: diaryList) {
+            diaryDetails.add( DiaryDetailResponseDto.of(diary));
+        }
+        return diaryDetails;
     }
 }

@@ -14,9 +14,9 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class DiaryDetailResponseDto {
 
-    private Long diary_id;
-    private LocalDateTime created_at;
-    private LocalDateTime updated_at;
+    private Long diaryId;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
     private String title;
     private LocalDate date;
     private String weather;
@@ -24,6 +24,8 @@ public class DiaryDetailResponseDto {
     private DiaryType diaryType;
     private Boolean isPrivate;
     private Boolean wantToCorrect;
+    private Boolean wantToImage;
+    private Boolean hasImage;
     private TextResponseDto text;
 
     public static DiaryDetailResponseDto of(Diary diary) {
@@ -38,6 +40,8 @@ public class DiaryDetailResponseDto {
                 diary.getDiaryType(),
                 diary.getIsPrivate(),
                 diary.getWantToCorrect(),
+                diary.getWantToImage(),
+                diary.getHasImage(),
                 TextResponseDto.of(diary.getText())
         );
     }

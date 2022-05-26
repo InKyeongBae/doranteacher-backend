@@ -21,9 +21,15 @@ public class DiaryApiController {
     }
 
     @GetMapping("")
-    public ApiResponse<DiaryCatalogDetailDto> findByYearMonth(@RequestParam Integer year, @RequestParam Integer month) {
-        List<DiaryCatalogDetailDto> diaryCatalogDetails = diaryService.findByYearMonth(year, month);
+    public ApiResponse<DiaryCatalogDetailDto> diaryCatalogList(@RequestParam Integer year, @RequestParam Integer month) {
+        List<DiaryCatalogDetailDto> diaryCatalogDetails = diaryService.findCatalogByYearMonth(year, month);
         return new ApiResponse<DiaryCatalogDetailDto>().ok(diaryCatalogDetails);
+    }
+
+    @GetMapping("/book")
+    public ApiResponse<DiaryDetailResponseDto> diaryBook(@RequestParam Integer year, @RequestParam Integer month) {
+        List<DiaryDetailResponseDto> diaryDetails = diaryService.findBookByYearMonth(year, month);
+        return new ApiResponse<DiaryDetailResponseDto>().ok(diaryDetails);
     }
 
     @GetMapping("/{id}")
