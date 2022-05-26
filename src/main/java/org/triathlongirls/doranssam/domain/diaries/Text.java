@@ -31,7 +31,7 @@ public class Text extends BaseTimeEntity {
 
     private boolean hasSynonym;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "comment_id")
     private Comment comment;
 

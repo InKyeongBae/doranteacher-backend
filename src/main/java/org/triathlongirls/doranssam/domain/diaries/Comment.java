@@ -20,5 +20,5 @@ public class Comment {
     private Long id;
 
     @Column
-    private String text;
+    private String content;
 }

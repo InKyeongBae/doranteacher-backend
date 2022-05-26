@@ -3,8 +3,8 @@ package org.triathlongirls.doranssam.dto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.triathlongirls.doranssam.domain.diaries.Diary;
 import org.triathlongirls.doranssam.constant.DiaryType;
+import org.triathlongirls.doranssam.domain.diaries.Diary;
 import org.triathlongirls.doranssam.domain.diaries.Text;
 import org.triathlongirls.doranssam.domain.user.User;
 
@@ -17,33 +17,33 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class DiarySaveRequestDto {
-    @NotBlank
+    @NotBlank(message = "제목은 필수 입력 값입니다.")
     @Size(max=45)
     private String title;
 
-    @NotNull
+    @NotNull(message = "날짜는 필수 입력 값입니다.")
     private LocalDate date;
 
-    @NotBlank
+    @NotBlank(message = "날씨는 필수 입력 값입니다.")
     @Size(max=45)
     private String weather;
 
-    @NotBlank
+    @NotBlank(message = "키워드는 필수 입력 값입니다.")
     private String keywords;
 
-    @NotBlank
+    @NotBlank(message = "일기 글은 필수 입력 값입니다.")
     private String text;
 
-    @NotNull
+    @NotNull(message = "일기 유형은 필수 입력 값입니다.")
     private DiaryType diaryType;
 
-    @NotNull
+    @NotNull(message = "코멘트 설정은 필수 입력 값입니다.")
     private Boolean isPrivate;
 
-    @NotNull
+    @NotNull(message = "맞춤범 교정 설정은 필수 입력 값입니다.")
     private Boolean wantToCorrect;
 
-    @NotNull
+    @NotNull(message = "이미지 설정은 필수 입력 값입니다.")
     private Boolean hasImage;
 
     public Diary toEntity(User user) {

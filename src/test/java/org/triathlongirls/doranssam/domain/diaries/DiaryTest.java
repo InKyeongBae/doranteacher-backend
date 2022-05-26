@@ -61,7 +61,6 @@ class DiaryTest {
                 .isPrivate(false)
                 .wantToCorrect(true)
                 .hasImage(false)
-                .user(user)
                 .build();
 
         diaryRepository.save(diary);

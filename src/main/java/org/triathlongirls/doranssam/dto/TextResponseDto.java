@@ -9,14 +9,19 @@ import org.triathlongirls.doranssam.domain.diaries.Text;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TextResponseDto {
-    private Long id;
+    private Long text_id;
     private String originalText;
-    //TODO: 다른 text, comment, 유의어 추가
+    private String correctText;
+    private String highlightedText;
+    //private String comment; //TODO: comment
 
     public static TextResponseDto of(Text text) {
         return new TextResponseDto(
                 text.getId(),
-                text.getOriginalText()
+                text.getOriginalText(),
+                text.getCorrectText(),
+                text.getHighlightedText()
+                //text.getComment().getContent()
         );
     }
 }

@@ -21,10 +21,11 @@ public class JwtAccessDeniedHandler implements AccessDeniedHandler {
         response.setContentType("application/json;charset=UTF-8");
         response.setStatus(HttpServletResponse.SC_FORBIDDEN);
         response.getWriter().println(
-                "{ \"message\" : \"" + DoranssamErrorCode.ACCESS_DENIED.getMessage()
-                        + "\", \"status\" : " + DoranssamErrorCode.ACCESS_DENIED.getStatus()
-                        + ", \"errors\" : [] }"
+                "{ \"status\" {"
                         + ", \"code\" : \"" + DoranssamErrorCode.ACCESS_DENIED.getCode()
-                        + "\" }");
+                        + "{ \"message\" : \"" + DoranssamErrorCode.ACCESS_DENIED.getMessage()
+                        + "\"},"
+                        + "\"results\" : " + null
+                        + "}");
     }
 }

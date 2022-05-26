@@ -16,23 +16,20 @@ import java.util.stream.Collectors;
 public class ErrorResponse {
 
     private String message;
-    private int status;
-    private List<FieldError> errors;
-    private String code;
+    private List<FieldError> results;
+    private Integer code;
 
 
     private ErrorResponse(final DoranssamErrorCode code, final List<FieldError> errors) {
         this.message = code.getMessage();
-        this.status = code.getStatus();
-        this.errors = errors;
+        this.results = errors;
         this.code = code.getCode();
     }
 
     private ErrorResponse(final DoranssamErrorCode code) {
         this.message = code.getMessage();
-        this.status = code.getStatus();
         this.code = code.getCode();
-        this.errors = new ArrayList<>();
+        this.results = new ArrayList<>();
     }
 
 

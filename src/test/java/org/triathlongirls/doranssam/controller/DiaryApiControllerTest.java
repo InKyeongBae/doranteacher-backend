@@ -1,82 +1,110 @@
-package org.triathlongirls.doranssam.controller;
 /*
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.boot.web.server.LocalServerPort;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.triathlongirls.doranssam.domain.diaries.Diaries;
-import org.triathlongirls.doranssam.repository.DiariesRepository;
-import org.triathlongirls.doranssam.dto.DiariesSaveRequestDto;
-import org.triathlongirls.doranssam.dto.DiariesUpdateRequestDto;
+package org.triathlongirls.doranssam.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.*;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.test.web.servlet.MockMvc;
+import org.triathlongirls.doranssam.constant.DiaryType;
+import org.triathlongirls.doranssam.domain.diaries.Diaries;
+import org.triathlongirls.doranssam.domain.diaries.Diary;
+import org.triathlongirls.doranssam.dto.DiariesUpdateRequestDto;
+import org.triathlongirls.doranssam.dto.DiarySaveRequestDto;
+import org.triathlongirls.doranssam.repository.DiaryRepository;
+
+import java.time.LocalDate;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@ExtendWith(SpringExtension.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@AutoConfigureMockMvc
+@WebAppConfiguration
+@ActiveProfiles("test")
+@SpringBootTest
 public class DiariesApiControllerTest {
 
-    @LocalServerPort
-    private int port;
+    @Autowired
+    private MockMvc mockMvc;
 
     @Autowired
-    private TestRestTemplate restTemplate;
+    private ObjectMapper objectMapper;
 
     @Autowired
-    private DiariesRepository diariesRepository;
+    private DiaryRepository diaryRepository;
 
     @AfterEach
-    public void tearDown() throws Exception {
-        diariesRepository.deleteAll();
+    public void tearDown(){
+        diaryRepository.deleteAll();
+    }
+
+    public Diary createDiary() {
+        DiarySaveRequestDto dto = new DiarySaveRequestDto(
+                "title",
+                LocalDate.now(),
+                "weather",
+                "keywords",
+                "text",
+                DiaryType.FREE,
+                false,
+                true,
+                false
+        );
+        return dto.toEntity();
     }
 
     @Test
-    public void Diaries_등록된다() throws Exception {
-        //given
-        String title = "title";
-        DiariesSaveRequestDto requestDto = DiariesSaveRequestDto.builder()
-                .title(title)
-                .build();
+    @DisplayName("일기 등록 성공")
+    public void successCreateDiary() throws Exception {
 
-        String url = "http://localhost:" + port + "/api/v1/diaries";
+        String body = objectMapper.writeValueAsString(
+                new DiarySaveRequestDto(
+                    "title",
+                    LocalDate.now(),
+                    "weather",
+                    "keywords",
+                    "text",
+                    DiaryType.FREE,
+                    false,
+                    true,
+                    false
+                )
+        );
 
-        //when
-        ResponseEntity<Long> responseEntity = restTemplate.postForEntity(url, requestDto, Long.class);
-
-        //then
-        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(responseEntity.getBody()).isGreaterThan(0L);
-
-        List<Diaries> all = diariesRepository.findAll();
-        assertThat(all.get(0).getTitle()).isEqualTo(title);
+        mockMvc.perform(
+                post("/diaries")
+                        .content(body)
+                        .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(status().isOk()
+        ).andDo(print());
     }
 
     @Test
-    public void Diaries_수정된다() throws Exception {
-        //given
-        Diaries savedDiaries = diariesRepository.save(Diaries.builder()
+    @DisplayName("일기 삭제 성공")
+    public void successDeleteDiary() throws Exception {
+        Diary savedDiaries = diaryRepository.save(Diary.builder()
                 .title("title")
                 .build());
 
-        Long updateId = savedDiaries.getId();
+        Long updateId = savedDiary.getId();
         String expectedTitle = "title2";
 
-        DiariesUpdateRequestDto requestDto = DiariesUpdateRequestDto.builder()
+        DiaryUpdateRequestDto requestDto = DiaryUpdateRequestDto.builder()
                 .title(expectedTitle)
                 .build();
 
         String url = "http://localhost:" + port + "/api/v1/diaries/" + updateId;
 
-        HttpEntity<DiariesUpdateRequestDto> requestEntity = new HttpEntity<>(requestDto);
+        HttpEntity<DiaryUpdateRequestDto> requestEntity = new HttpEntity<>(requestDto);
 
         //when
         ResponseEntity<Long> responseEntity = restTemplate.exchange(url, HttpMethod.PUT, requestEntity, Long.class);
@@ -85,8 +113,8 @@ public class DiariesApiControllerTest {
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(responseEntity.getBody()).isGreaterThan(0L);
 
-        List<Diaries> all = diariesRepository.findAll();
+        List<Diary> all = diaryRepository.findAll();
         assertThat(all.get(0).getTitle()).isEqualTo(expectedTitle);
     }
 }
- */
+*/

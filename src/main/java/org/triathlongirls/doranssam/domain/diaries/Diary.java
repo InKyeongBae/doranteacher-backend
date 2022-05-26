@@ -47,11 +47,11 @@ public class Diary extends BaseTimeEntity {
     @JoinColumn(name= "user_id")
     private User user;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "text_id")
     private Text text;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "diary_img_id")
     private DiaryImg diaryImg;
 
