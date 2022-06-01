@@ -13,7 +13,8 @@ public interface DiaryRepository extends JpaRepository<Diary, Long> {
 
     @Query(value = "select *  " +
             "from diaries d " +
-            "where year(d.date) = ?1 and month(d.date) =?2 and d.user_id =?3 "
+            "where year(d.date) = ?1 and month(d.date) =?2 and d.user_id =?3 " +
+            "order by  d.date"
             , nativeQuery = true)
     List<Diary> findByYearMonth(Integer year, Integer month, Long userId);
 }
