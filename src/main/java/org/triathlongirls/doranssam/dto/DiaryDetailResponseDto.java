@@ -3,11 +3,12 @@ package org.triathlongirls.doranssam.dto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.triathlongirls.doranssam.domain.diaries.Diary;
 import org.triathlongirls.doranssam.constant.DiaryType;
+import org.triathlongirls.doranssam.domain.diaries.Diary;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @AllArgsConstructor
@@ -20,15 +21,19 @@ public class DiaryDetailResponseDto {
     private String title;
     private LocalDate date;
     private String weather;
-    private String keywords;
+    private List<String> keywords;
     private DiaryType diaryType;
     private Boolean isPrivate;
     private Boolean wantToCorrect;
     private Boolean wantToImage;
     private Boolean hasImage;
-    private TextResponseDto text;
+    private Integer step;
+    private String text;
+    private String correct_text;
+    private String selectedImage;
 
     public static DiaryDetailResponseDto of(Diary diary) {
+        List<String> keyword_list = List.of(diary.getKeywords().split(","));
         return new DiaryDetailResponseDto(
                 diary.getId(),
                 diary.getCreated_at(),
@@ -36,13 +41,16 @@ public class DiaryDetailResponseDto {
                 diary.getTitle(),
                 diary.getDate(),
                 diary.getWeather(),
-                diary.getKeywords(),
+                keyword_list,
                 diary.getDiaryType(),
                 diary.getIsPrivate(),
                 diary.getWantToCorrect(),
                 diary.getWantToImage(),
                 diary.getHasImage(),
-                TextResponseDto.of(diary.getText())
+                diary.getWritingStep().getValue(),
+                diary.getText().getOriginalText(),
+                diary.getText().getCorrectText(),
+                diary.getDiaryImgUrl()
         );
     }
 }

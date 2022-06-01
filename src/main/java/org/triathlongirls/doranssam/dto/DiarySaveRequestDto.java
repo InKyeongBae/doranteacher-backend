@@ -45,6 +45,8 @@ public class DiarySaveRequestDto {
     
     @NotNull(message = "이미지 추천 설정은 필수 입력 값입니다.")
     private Boolean wantToImage;
+
+    //TODO: image
     
 
     public Diary toEntity(User user) {

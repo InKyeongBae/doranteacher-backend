@@ -68,7 +68,7 @@ public class DiaryService {
                     new DiaryCatalogDetailDto(
                             diary.getId(),
                             diary.getDate(),
-                            diary.getWantToImage() ? diary.getHasImage() ? diary.getDiaryImg().getImgUrl() : "" : "",
+                            diary.getDiaryImgUrl(),
                             diary.getCreated_at(),
                             diary.getUpdated_at()
                     )

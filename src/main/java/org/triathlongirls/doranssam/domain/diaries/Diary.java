@@ -7,6 +7,7 @@ import lombok.ToString;
 import org.triathlongirls.doranssam.constant.DiaryType;
 import org.triathlongirls.doranssam.domain.BaseTimeEntity;
 import org.triathlongirls.doranssam.domain.user.User;
+import org.triathlongirls.doranssam.domain.user.WritingStep;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -37,13 +38,21 @@ public class Diary extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private DiaryType diaryType;
 
+    @Column(name = "is_private")
     private Boolean isPrivate;
 
+    @Column(name = "want_to_correct")
     private Boolean wantToCorrect;
 
+    @Column(name = "want_to_image")
     private Boolean wantToImage;
 
+    @Column(name = "has_image")
     private Boolean hasImage;
+
+    @Column(name = "writing_step")
+    @Enumerated(EnumType.STRING)
+    private WritingStep writingStep;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name= "user_id")
@@ -85,6 +94,11 @@ public class Diary extends BaseTimeEntity {
         this.wantToCorrect = wantToCorrect;
         this.wantToImage = wantToImage;
         this.hasImage = hasImage;
+        this.writingStep = user.getWritingStep();
         setUser(user);
+    }
+
+    public String getDiaryImgUrl() {
+        return getWantToImage() ? getHasImage() ? getDiaryImg().getImgUrl() : "" : "";
     }
 }
