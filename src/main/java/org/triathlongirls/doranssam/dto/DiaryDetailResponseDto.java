@@ -28,7 +28,7 @@ public class DiaryDetailResponseDto {
     private Boolean wantToImage;
     private Boolean hasImage;
     private Integer step;
-    private String text;
+    private String original_text;
     private String correct_text;
     private String selectedImage;
 
