@@ -20,31 +20,33 @@ public class DoranssamExceptionHandler extends ResponseEntityExceptionHandler {
     protected ResponseEntity<Object> handleExceptionInternal(
             Exception ex, Object body, HttpHeaders headers, HttpStatus status, WebRequest request
     ) {
-        ApiResponse response = new ApiResponse<>().fail(DoranssamErrorCode.BAD_REQUEST.getCode());
-        //ErrorResponse response = ErrorResponse.of(DoranssamErrorCode.INVALID_INPUT_VALUE, ex.getMessage());
+        ApiResponse response = new ApiResponse<>().fail(status.value(), ex.getMessage());
         return super.handleExceptionInternal(ex, response, headers, status, request);
     }
 
 
     @ExceptionHandler(DoranssamException.class)
-    protected ApiResponse<Object> handleBusinessException(
+    protected ResponseEntity<ApiResponse> handleBusinessException(
             final DoranssamException e, WebRequest request) {
         log.warn("handleEntityNotFoundException", e);
         final DoranssamErrorCode doranssamErrorCode = e.getErrorCode();
-        return new ApiResponse<>().fail(doranssamErrorCode.getCode(), e.getMessage());
+        ApiResponse<Object> response = new ApiResponse<>().fail(doranssamErrorCode.getCode(), e.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.valueOf(doranssamErrorCode.getStatus()));
     }
 
     @ExceptionHandler(AuthenticationException.class)
-    protected ApiResponse<Object> handleAuthenticationException(
+    protected ResponseEntity<ApiResponse> handleAuthenticationException(
             AuthenticationException e, WebRequest request) {
         log.warn("handleAuthenticationException: " + e.getMessage());
-        return new ApiResponse<>().fail(DoranssamErrorCode.UNAUTHORIZED.getCode(), e.getMessage());
+        ApiResponse<Object> response = new ApiResponse<>().fail(DoranssamErrorCode.UNAUTHORIZED.getCode(), e.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
     }
 
     @ExceptionHandler(Throwable.class)
-    protected ApiResponse<Object> handleException(
+    protected ResponseEntity<ApiResponse> handleException(
             Throwable t, WebRequest request) {
         log.error("handleException: ", t);
-        return new ApiResponse<>().fail(DoranssamErrorCode.INTERNAL_SERVER_ERROR.getCode(), t.getMessage());
+        ApiResponse<Object> response = new ApiResponse<>().fail(DoranssamErrorCode.INTERNAL_SERVER_ERROR.getCode(), t.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
