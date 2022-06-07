@@ -2,10 +2,13 @@ package org.triathlongirls.doranssam.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.triathlongirls.doranssam.dto.*;
+import org.triathlongirls.doranssam.service.S3UploaderService;
 import org.triathlongirls.doranssam.service.diaries.DiaryService;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -41,5 +44,14 @@ public class DiaryApiController {
     public ApiResponse<?> deleteDiary(@PathVariable Long id) {
         diaryService.deleteById(id);
         return new ApiResponse<>().ok(List.of());
+    }
+
+
+    private final S3UploaderService s3Uploader;
+
+    @PostMapping("/images")
+    public String upload(@RequestParam("images") MultipartFile multipartFile) throws IOException {
+        s3Uploader.upload(multipartFile, "static");
+        return "test";
     }
 }
