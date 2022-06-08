@@ -3,6 +3,7 @@ package org.triathlongirls.doranssam.dto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 import org.triathlongirls.doranssam.constant.DiaryType;
 import org.triathlongirls.doranssam.domain.diaries.Diary;
 import org.triathlongirls.doranssam.domain.diaries.Text;
@@ -46,8 +47,7 @@ public class DiarySaveRequestDto {
     @NotNull(message = "이미지 추천 설정은 필수 입력 값입니다.")
     private Boolean wantToImage;
 
-    //TODO: image
-    
+    private  MultipartFile images;
 
     public Diary toEntity(User user) {
         Text text = Text.builder()
@@ -67,7 +67,7 @@ public class DiarySaveRequestDto {
                 .isPrivate(isPrivate)
                 .wantToCorrect(wantToCorrect)
                 .wantToImage(wantToImage)
-                .hasImage(false)
+                .hasImage(false) //일기 생성 이후 이미지 업로드
                 .user(user)
                 .build();
     }

@@ -35,6 +35,9 @@ public enum DoranssamErrorCode {
     INTERNAL_SERVER_ERROR(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, 5001, "Server Error"),
     SERVICE_UNAVAILABLE(HttpServletResponse.SC_SERVICE_UNAVAILABLE, 5002, "Service Unavailable"),
 
+    // 외부 요청 및 응답
+    S3_UPLOAD_FAILED(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, 5102, "s3 upload failed.")
+
     ;
 
     private final Integer code;
