@@ -1,4 +1,4 @@
-package org.triathlongirls.doranssam.service;
+package org.triathlongirls.doranssam.config;
 
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
@@ -16,7 +16,6 @@ public class AmazonS3Config {
 
     @Value("${cloud.aws.credentials.secret-key}")
     private String secretKey;
-
 
     @Value("${cloud.aws.region.static}")
     private String region;

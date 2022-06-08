@@ -1,14 +1,15 @@
 package org.triathlongirls.doranssam.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import org.h2.util.json.JSONObject;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.triathlongirls.doranssam.dto.*;
-import org.triathlongirls.doranssam.service.S3UploaderService;
 import org.triathlongirls.doranssam.service.diaries.DiaryService;
 
 import javax.validation.Valid;
-import java.io.IOException;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -16,11 +17,15 @@ import java.util.List;
 @RequestMapping("/diaries")
 public class DiaryApiController {
 
+    private final ObjectMapper objectMapper;
     private final DiaryService diaryService;
 
-    @PostMapping("")
-    public ApiResponse<DiarySaveResponseDto> createDiary(@Valid @RequestBody DiarySaveRequestDto requestDto) {
-        return new ApiResponse<DiarySaveResponseDto>().ok(List.of(diaryService.save(requestDto)));
+    @PostMapping(name="", consumes="multipart/form-data")
+    public ApiResponse<DiarySaveResponseDto> createDiary(
+            @RequestParam("images") MultipartFile multipartFile,
+            @RequestParam("data") String diaryData) throws JsonProcessingException {
+        DiarySaveRequestDto requestDto = objectMapper.readValue(diaryData, DiarySaveRequestDto.class);
+        return new ApiResponse<DiarySaveResponseDto>().ok(List.of(diaryService.save(requestDto, multipartFile)));
     }
 
     @GetMapping("")
@@ -44,14 +49,5 @@ public class DiaryApiController {
     public ApiResponse<?> deleteDiary(@PathVariable Long id) {
         diaryService.deleteById(id);
         return new ApiResponse<>().ok(List.of());
-    }
-
-
-    private final S3UploaderService s3Uploader;
-
-    @PostMapping("/images")
-    public String upload(@RequestParam("images") MultipartFile multipartFile) throws IOException {
-        s3Uploader.upload(multipartFile, "static");
-        return "test";
     }
 }

@@ -12,9 +12,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@Slf4j
-@RequiredArgsConstructor
-@Service
+//@Slf4j
+//@RequiredArgsConstructor
+//@Service
 public class AwsS3Service {
 //    private final S3UploaderService s3UploaderService;
 //

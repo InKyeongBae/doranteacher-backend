@@ -50,7 +50,7 @@ public class DiaryDetailResponseDto {
                 diary.getWritingStep().getValue(),
                 diary.getText().getOriginalText(),
                 diary.getText().getCorrectText(),
-                diary.getDiaryImgUrl()
+                diary.loadSelectedImgUrl()
         );
     }
 }
