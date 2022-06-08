@@ -3,13 +3,13 @@ package org.triathlongirls.doranssam.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
-import org.h2.util.json.JSONObject;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.triathlongirls.doranssam.dto.*;
+import org.triathlongirls.doranssam.exception.DoranssamErrorCode;
+import org.triathlongirls.doranssam.exception.DoranssamException;
 import org.triathlongirls.doranssam.service.diaries.DiaryService;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -48,11 +48,15 @@ public class DiaryApiController {
 
     @GetMapping("/{id}")
     public ApiResponse<DiaryDetailResponseDto> findById(@PathVariable Long id) {
+        if (diaryService.validateDiary(id))
+            throw new DoranssamException("일기 조회 권한이 없습니다.", DoranssamErrorCode.FORBIDDEN);
         return new ApiResponse<DiaryDetailResponseDto>().ok(List.of(diaryService.findById(id)));
     }
 
     @DeleteMapping("/{id}")
     public ApiResponse<?> deleteDiary(@PathVariable Long id) {
+        if (diaryService.validateDiary(id))
+            throw new DoranssamException("일기 삭제 권한이 없습니다.", DoranssamErrorCode.FORBIDDEN);
         diaryService.deleteById(id);
         return new ApiResponse<>().ok(List.of());
     }

@@ -26,11 +26,12 @@ public enum DoranssamErrorCode {
     WRONG_TOKEN(HttpServletResponse.SC_UNAUTHORIZED, 4014, "Invalid JWT Token"),
     BLACKLISTED_TOKEN(HttpServletResponse.SC_UNAUTHORIZED, 4014, "Invalid JWT Token"),
 
+    FORBIDDEN(HttpServletResponse.SC_FORBIDDEN, 4015,"fobidden"),
+
     // Member
     USERNAME_DUPLICATION(HttpServletResponse.SC_BAD_REQUEST, 4101, "이미 가입한 사용자입니다."),
     LOGIN_INPUT_INVALID(HttpServletResponse.SC_BAD_REQUEST, 4102, "아이디 또는 비밀번호가 잘못되었습니다."),
     PASSWORD_NOT_SAME(HttpServletResponse.SC_BAD_REQUEST, 4102, "비밀번호가 일치하지 않습니다."),
-
 
     INTERNAL_SERVER_ERROR(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, 5001, "Server Error"),
     SERVICE_UNAVAILABLE(HttpServletResponse.SC_SERVICE_UNAVAILABLE, 5002, "Service Unavailable"),
