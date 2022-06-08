@@ -20,6 +20,7 @@ import org.triathlongirls.doranssam.service.user.UserService;
 import org.triathlongirls.doranssam.service.S3UploaderService;
 import org.triathlongirls.doranssam.util.SecurityUtil;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
