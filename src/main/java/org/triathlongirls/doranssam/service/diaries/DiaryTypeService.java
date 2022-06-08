@@ -2,12 +2,10 @@ package org.triathlongirls.doranssam.service.diaries;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.triathlongirls.doranssam.constant.DiaryQuestion;
 import org.triathlongirls.doranssam.constant.DiaryType;
 import org.triathlongirls.doranssam.dto.DiaryTypeRecommendResult;
-import org.triathlongirls.doranssam.util.dl4j.Word2VecUtil;
 
-import java.io.FileNotFoundException;
-import java.io.UnsupportedEncodingException;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -55,5 +53,13 @@ public class DiaryTypeService {
         }
 
         return results;
+    }
+
+    public String getStep2Questions(String type) {
+        return DiaryQuestion.getStep2Question(DiaryType.valueOf(type));
+    }
+
+    public List<String> getStep1Questions(String type) {
+        return DiaryQuestion.getStep1Question(DiaryType.valueOf(type));
     }
 }

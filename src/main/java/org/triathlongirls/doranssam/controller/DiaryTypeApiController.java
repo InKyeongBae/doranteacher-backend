@@ -21,9 +21,13 @@ public class DiaryTypeApiController {
         return new ApiResponse<DiaryTypeRecommendResult>().ok(results);
     }
 
-//    @GetMapping("/questions?")
-//    public ApiResponse<DiaryTypeRecommendResult> diaryQuestionList(@RequestParam String type) {
-//        List<DiaryTypeRecommendResult> results = diaryTypeService.findDiaryQuestions(type);
-//        return new ApiResponse<DiaryTypeRecommendResult>().ok(results);
-//    }
+    @GetMapping("/questions/step2")
+    public ApiResponse<String> step2QuestionList(@RequestParam String type) {
+        return new ApiResponse<String>().ok(List.of(diaryTypeService.getStep2Questions(type)));
+    }
+
+    @GetMapping("/questions/step1")
+    public ApiResponse<String> step1QuestionList(@RequestParam String type) {
+        return new ApiResponse<String>().ok(diaryTypeService.getStep1Questions(type));
+    }
 }
