@@ -46,5 +46,11 @@ public class Text extends BaseTimeEntity {
     public void setComment(Comment comment) {
         this.comment = comment;
     }
+
+    public void saveText(String originalText, String correctText) {
+        this.originalText = originalText;
+        this.correctText = correctText;
+        this.hasSynonym = false;
+    }
 }
 

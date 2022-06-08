@@ -1,15 +1,14 @@
 package org.triathlongirls.doranssam.domain.diaries;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 
+@Builder
 @Entity
 @Getter @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @ToString
 @Table(name = "comments")
 public class Comment {
