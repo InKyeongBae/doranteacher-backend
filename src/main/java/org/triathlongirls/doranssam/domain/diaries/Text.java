@@ -7,6 +7,7 @@ import lombok.ToString;
 import org.triathlongirls.doranssam.domain.BaseTimeEntity;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Getter
@@ -23,8 +24,12 @@ public class Text extends BaseTimeEntity {
     @Column(columnDefinition = "TEXT")
     private String originalText;
 
-    @Column(columnDefinition = "TEXT")
-    private String correctText;
+    @ElementCollection
+    @CollectionTable(
+            name = "correct_texts",
+            joinColumns = @JoinColumn(name="text_id")
+    )
+    private List<String> correctText;
 
     @Column(columnDefinition = "TEXT")
     private String highlightedText;
@@ -36,7 +41,7 @@ public class Text extends BaseTimeEntity {
     private Comment comment;
 
     @Builder
-    public Text(String originalText, String correctText, String highlightedText, boolean hasSynonym, Diary diary) {
+    public Text(String originalText, List<String> correctText, String highlightedText, boolean hasSynonym) {
         this.originalText = originalText;
         this.correctText = correctText;
         this.highlightedText = highlightedText;
@@ -47,7 +52,7 @@ public class Text extends BaseTimeEntity {
         this.comment = comment;
     }
 
-    public void saveText(String originalText, String correctText) {
+    public void saveText(String originalText, List<String> correctText) {
         this.originalText = originalText;
         this.correctText = correctText;
         this.hasSynonym = false;

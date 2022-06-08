@@ -30,7 +30,7 @@ public class DiaryDetailResponseDto {
     private Boolean hasImage;
     private Integer step;
     private String original_text;
-    private String correct_text;
+    private List<String> correct_text;
     private String comment;
     private String selectedImage;
     private String imgStatus;
