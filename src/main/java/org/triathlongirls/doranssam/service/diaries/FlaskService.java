@@ -12,7 +12,7 @@ public class FlaskService {
 
     public HttpEntity<String> requestToFlask(String text) {
         RestTemplate restTemplate = new RestTemplate();
-        String url = "http://localhost:5000/recommend";
+        String url = "http://localhost:4000/recommend";
 
         // Body set
         MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
