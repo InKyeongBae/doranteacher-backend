@@ -23,7 +23,7 @@ public interface DiaryRepository extends JpaRepository<Diary, Long> {
             "from diaries d " +
             "where d.user_id = ?1  and month(d.date) < month(CURRENT_DATE()) " +
             "GROUP BY DATE_FORMAT(d.date, '%Y-%m') " +
-            "order by DATE_FORMAT(d.date, '%Y-%m')"
+            "order by DATE_FORMAT(d.date, '%Y-%m') DESC"
             , nativeQuery = true)
     List<DiaryBookCountInterface> countDiaryByYearMonth(Long userId);
 }
