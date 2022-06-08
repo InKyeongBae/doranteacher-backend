@@ -19,6 +19,7 @@ import org.triathlongirls.doranssam.service.user.UserService;
 import org.triathlongirls.doranssam.service.S3UploaderService;
 import org.triathlongirls.doranssam.util.SecurityUtil;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,11 +40,8 @@ public class DiaryService {
 
         // text 및 comment 생성
         Text text = null;
-        try {
-            text = textService.saveText(requestDto.getText(), requestDto.getIsPrivate());
-        } catch (JsonProcessingException e) {
-            throw new DoranssamException("맞춤법 교정에 실패했습니다.",DoranssamErrorCode.INTERNAL_SERVER_ERROR);
-        }
+        text = textService.saveText(requestDto.getText(), requestDto.getIsPrivate());
+
 
         Diary savedDiary = diaryRepository.save(requestDto.toEntity(user, text));
 

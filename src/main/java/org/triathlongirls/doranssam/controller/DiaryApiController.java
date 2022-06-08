@@ -3,13 +3,18 @@ package org.triathlongirls.doranssam.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import org.apache.http.HttpHeaders;
+import org.springframework.http.HttpEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 import org.triathlongirls.doranssam.dto.*;
 import org.triathlongirls.doranssam.exception.DoranssamErrorCode;
 import org.triathlongirls.doranssam.exception.DoranssamException;
 import org.triathlongirls.doranssam.service.diaries.DiaryService;
+import org.triathlongirls.doranssam.service.diaries.FlaskService;
 
+import java.io.File;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -19,6 +24,7 @@ public class DiaryApiController {
 
     private final ObjectMapper objectMapper;
     private final DiaryService diaryService;
+    private final FlaskService flaskService;
 
     @PostMapping(name="", consumes="multipart/form-data")
     public ApiResponse<DiarySaveResponseDto> createDiary(
@@ -26,6 +32,12 @@ public class DiaryApiController {
             @RequestParam("data") String diaryData) throws JsonProcessingException {
         DiarySaveRequestDto requestDto = objectMapper.readValue(diaryData, DiarySaveRequestDto.class);
         return new ApiResponse<DiarySaveResponseDto>().ok(List.of(diaryService.save(requestDto, multipartFile)));
+    }
+
+    @PatchMapping("/recommend/flask")
+    public HttpEntity<String> recommend(@RequestParam Integer diaryId, @RequestParam String text) {
+        System.out.println(diaryId);
+        return flaskService.requestToFlask(text);
     }
 
     @GetMapping("")

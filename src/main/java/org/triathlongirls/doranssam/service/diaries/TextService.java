@@ -28,11 +28,11 @@ public class TextService {
     private final TextRepository textRepository;
     private final ObjectMapper objectMapper;
 
-    @Value("${doranssam.api-server.host}")
-    public String commentHost;
-
-    @Value("${doranssam.api-server.comment-path}")
-    public String commentPath;
+//    @Value("${doranssam.api-server.host}")
+//    public String commentHost;
+//
+//    @Value("${doranssam.api-server.comment-path}")
+//    public String commentPath;
 
     public Text saveText(String original_text, Boolean isPrivate) {
         Text text = new Text();
