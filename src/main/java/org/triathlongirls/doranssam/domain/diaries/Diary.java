@@ -53,7 +53,7 @@ public class Diary extends BaseTimeEntity {
     @NotNull
     @Column(name = "want_to_image")
     private Boolean wantToImage;
-    @NotNull
+
     @Column(name = "has_image")
     private Boolean hasImage;
 

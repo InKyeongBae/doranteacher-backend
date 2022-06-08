@@ -10,5 +10,5 @@ import lombok.NoArgsConstructor;
 public class DiaryTypeRecommendResult {
 
     private String diaryType;
-    private Double rank;
+    private Integer id; //mean rank
 }
