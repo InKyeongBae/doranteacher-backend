@@ -1,11 +1,13 @@
 package org.triathlongirls.doranssam.service.diaries;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.triathlongirls.doranssam.domain.diaries.Diary;
 import org.triathlongirls.doranssam.domain.diaries.DiaryImg;
+import org.triathlongirls.doranssam.domain.diaries.Text;
 import org.triathlongirls.doranssam.domain.user.User;
 import org.triathlongirls.doranssam.dto.*;
 import org.triathlongirls.doranssam.exception.DoranssamErrorCode;
@@ -25,6 +27,7 @@ import java.util.List;
 public class DiaryService {
     private final UserService userService;
     private final DiaryImgService diaryImgService;
+    private final TextService textService;
     private final DiaryRepository diaryRepository;
 
     @Transactional
@@ -33,7 +36,10 @@ public class DiaryService {
         User user = userService.findByUsername(username)
                 .orElseThrow(() -> new EntityNotFoundException("사용자가 존재하지 않습니다.: " + username));
 
-        Diary savedDiary = diaryRepository.save(requestDto.toEntity(user));
+        // text 및 comment 생성
+        Text text = textService.saveText(requestDto.getText(), requestDto.getIsPrivate());
+
+        Diary savedDiary = diaryRepository.save(requestDto.toEntity(user, text));
 
         // 직접 업로드한 image 파일 S3에 저장
         if (multipartFile != null && !multipartFile.isEmpty() && !savedDiary.getWantToImage()) {
@@ -113,7 +119,6 @@ public class DiaryService {
         String username = SecurityUtil.getCurrentUsername();
         User user = userService.findByUsername(username)
                 .orElseThrow(() -> new EntityNotFoundException("사용자가 존재하지 않습니다.: " + username));
-//        List<DiaryBookCountResult> results = diaryRepository.countDiaryByYearMonth(username);
         List<DiaryBookCountInterface> results = diaryRepository.countDiaryByYearMonth(user.getId());
 
         return results;

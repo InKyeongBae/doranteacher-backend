@@ -50,21 +50,14 @@ public class DiarySaveRequestDto {
 
     private  MultipartFile images;
 
-    public Diary toEntity(User user) {
-        Text text = Text.builder()
-                .originalText(this.text)
-                .correctText("correctText") //TODO: text 처리
-                .highlightedText("highlightedText")
-                .hasSynonym(true)
-                .build();
-
+    public Diary toEntity(User user, Text savedText) {
         return Diary.builder()
                 .title(title)
                 .date(date)
                 .weather(weather)
                 .keywords(keywords)
                 .diaryType(diaryType)
-                .text(text)
+                .text(savedText)
                 .isPrivate(isPrivate)
                 .wantToCorrect(wantToCorrect)
                 .wantToImage(wantToImage)

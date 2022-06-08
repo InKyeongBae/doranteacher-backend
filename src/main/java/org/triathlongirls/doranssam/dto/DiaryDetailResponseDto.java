@@ -3,6 +3,7 @@ package org.triathlongirls.doranssam.dto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.triathlongirls.doranssam.constant.DiaryStatus;
 import org.triathlongirls.doranssam.constant.DiaryType;
 import org.triathlongirls.doranssam.domain.diaries.Diary;
 
@@ -30,12 +31,17 @@ public class DiaryDetailResponseDto {
     private Integer step;
     private String original_text;
     private String correct_text;
+    private String comment;
     private String selectedImage;
     private String imgStatus;
     private String commentStatus;
 
     public static DiaryDetailResponseDto of(Diary diary) {
         List<String> keyword_list = List.of(diary.getKeywords().split(","));
+        String comment = null;
+        if (!diary.getIsPrivate() && diary.getCommentStatus().equals(DiaryStatus.COMPLETE)) {
+            comment = diary.getText().getComment().getContent();
+        }
         return new DiaryDetailResponseDto(
                 diary.getId(),
                 diary.getCreated_at(),
@@ -52,6 +58,7 @@ public class DiaryDetailResponseDto {
                 diary.getWritingStep().getValue(),
                 diary.getText().getOriginalText(),
                 diary.getText().getCorrectText(),
+                comment,
                 diary.loadSelectedImgUrl(),
                 diary.getImgStatus().toString(),
                 diary.getCommentStatus().toString()
