@@ -2,8 +2,8 @@ package org.triathlongirls.doranssam.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.stereotype.Repository;
 import org.triathlongirls.doranssam.domain.diaries.Diary;
+import org.triathlongirls.doranssam.dto.DiaryBookCountInterface;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,4 +18,12 @@ public interface DiaryRepository extends JpaRepository<Diary, Long> {
             "order by  d.date"
             , nativeQuery = true)
     List<Diary> findByYearMonth(Integer year, Integer month, Long userId);
+
+    @Query(value = "select DATE_FORMAT(d.date, '%Y-%m') as date, count(*) as diaryCount " +
+            "from diaries d " +
+            "where d.user_id = ?1  and month(d.date) < month(CURRENT_DATE()) " +
+            "GROUP BY DATE_FORMAT(d.date, '%Y-%m') " +
+            "order by DATE_FORMAT(d.date, '%Y-%m')"
+            , nativeQuery = true)
+    List<DiaryBookCountInterface> countDiaryByYearMonth(Long userId);
 }

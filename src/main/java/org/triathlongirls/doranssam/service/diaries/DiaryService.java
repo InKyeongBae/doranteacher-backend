@@ -7,10 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.triathlongirls.doranssam.domain.diaries.Diary;
 import org.triathlongirls.doranssam.domain.diaries.DiaryImg;
 import org.triathlongirls.doranssam.domain.user.User;
-import org.triathlongirls.doranssam.dto.DiaryCatalogDetailDto;
-import org.triathlongirls.doranssam.dto.DiaryDetailResponseDto;
-import org.triathlongirls.doranssam.dto.DiarySaveRequestDto;
-import org.triathlongirls.doranssam.dto.DiarySaveResponseDto;
+import org.triathlongirls.doranssam.dto.*;
 import org.triathlongirls.doranssam.exception.DoranssamErrorCode;
 import org.triathlongirls.doranssam.exception.DoranssamException;
 import org.triathlongirls.doranssam.exception.EntityNotFoundException;
@@ -110,5 +107,16 @@ public class DiaryService {
             diaryDetails.add( DiaryDetailResponseDto.of(diary));
         }
         return diaryDetails;
+    }
+
+    public List<DiaryBookCountInterface> countDiaryEachMonth() {
+        String username = SecurityUtil.getCurrentUsername();
+        User user = userService.findByUsername(username)
+                .orElseThrow(() -> new EntityNotFoundException("사용자가 존재하지 않습니다.: " + username));
+//        List<DiaryBookCountResult> results = diaryRepository.countDiaryByYearMonth(username);
+        List<DiaryBookCountInterface> results = diaryRepository.countDiaryByYearMonth(user.getId());
+
+        return results;
+
     }
 }

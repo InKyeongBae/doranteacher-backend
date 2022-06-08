@@ -40,6 +40,12 @@ public class DiaryApiController {
         return new ApiResponse<DiaryDetailResponseDto>().ok(diaryDetails);
     }
 
+    @GetMapping("/book/count")
+    public ApiResponse<DiaryBookCountInterface> diaryBookCount() {
+        List<DiaryBookCountInterface> diaryDetails = diaryService.countDiaryEachMonth();
+        return new ApiResponse<DiaryBookCountInterface>().ok(diaryDetails);
+    }
+
     @GetMapping("/{id}")
     public ApiResponse<DiaryDetailResponseDto> findById(@PathVariable Long id) {
         return new ApiResponse<DiaryDetailResponseDto>().ok(List.of(diaryService.findById(id)));
