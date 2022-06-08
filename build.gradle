@@ -44,6 +44,10 @@ dependencies {
     implementation('com.google.cloud:google-cloud-vision')
     implementation 'io.awspring.cloud:spring-cloud-starter-aws:2.3.1'
 
+    implementation('org.deeplearning4j:deeplearning4j-ui:0.6.0')
+    implementation('org.deeplearning4j:deeplearning4j-nlp:0.9.1')
+    implementation('org.nd4j:nd4j-native:0.9.1')
+
 }
 
 test {
