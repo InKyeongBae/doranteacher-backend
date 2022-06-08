@@ -17,6 +17,8 @@ public class DiarySaveResponseDto {
     private LocalDateTime updatedAt;
     private String username;
     private String nickname;
+    private String imgStatus;
+    private String commentStatus;
 
     public static DiarySaveResponseDto of(Diary diary) {
         return new DiarySaveResponseDto(
@@ -24,7 +26,9 @@ public class DiarySaveResponseDto {
                 diary.getCreated_at(),
                 diary.getUpdated_at(),
                 diary.getUser().getUsername(),
-                diary.getUser().getNickname()
+                diary.getUser().getNickname(),
+                diary.getImgStatus().toString(),
+                diary.getCommentStatus().toString()
         );
     }
 }

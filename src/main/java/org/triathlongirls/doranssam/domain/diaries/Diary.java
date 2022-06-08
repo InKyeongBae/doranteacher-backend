@@ -4,13 +4,13 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.triathlongirls.doranssam.constant.DiaryStatus;
 import org.triathlongirls.doranssam.constant.DiaryType;
 import org.triathlongirls.doranssam.domain.BaseTimeEntity;
 import org.triathlongirls.doranssam.domain.user.User;
 import org.triathlongirls.doranssam.domain.user.WritingStep;
 import org.triathlongirls.doranssam.exception.DoranssamErrorCode;
 import org.triathlongirls.doranssam.exception.DoranssamException;
-import org.triathlongirls.doranssam.exception.EntityNotFoundException;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -18,7 +18,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Entity
 @Getter
@@ -58,6 +57,14 @@ public class Diary extends BaseTimeEntity {
     @Column(name = "has_image")
     private Boolean hasImage;
 
+    @Column(name = "img_status")
+    @Enumerated(EnumType.STRING)
+    private DiaryStatus imgStatus;
+
+    @Column(name = "comment_status")
+    @Enumerated(EnumType.STRING)
+    private DiaryStatus commentStatus;
+
     @NotNull
     @Column(name = "writing_step")
     @Enumerated(EnumType.STRING)
@@ -79,8 +86,9 @@ public class Diary extends BaseTimeEntity {
         user.getDiaries().add(this);
     }
 
-    public void setHasImage(Boolean hasImage) {
-        this.hasImage = hasImage;
+    public void completeUploadingImg() {
+        this.hasImage = true;
+        this.imgStatus = DiaryStatus.COMPLETE;
     }
 
     @Builder
@@ -95,7 +103,9 @@ public class Diary extends BaseTimeEntity {
             Boolean wantToCorrect,
             Boolean wantToImage,
             Boolean hasImage,
-            User user) {
+            User user,
+            DiaryStatus imgStatus,
+            DiaryStatus commentStatus) {
         this.title = title;
         this.date = date;
         this.weather = weather;
@@ -107,16 +117,21 @@ public class Diary extends BaseTimeEntity {
         this.wantToImage = wantToImage;
         this.hasImage = hasImage;
         this.writingStep = user.getWritingStep();
+        this.imgStatus = imgStatus;
+        this.commentStatus = commentStatus;
         setUser(user);
     }
 
     public String loadSelectedImgUrl() {
         if (getHasImage()) {
-            DiaryImg diaryImg = getDiaryImgs().stream().
+            Optional<DiaryImg> diaryImg = getDiaryImgs().stream().
                     filter(img -> img.getIsSelected()).
-                    findFirst()
-                    .orElseThrow(() -> new DoranssamException("이미지를 불러올 수 없습니다.", DoranssamErrorCode.INTERNAL_SERVER_ERROR));
-            return diaryImg.getImgUrl();
+                    findFirst();
+            if(!diaryImg.isPresent()) {
+                this.hasImage=false;
+                throw new DoranssamException("이미지를 불러올 수 없습니다.", DoranssamErrorCode.INTERNAL_SERVER_ERROR);
+            }
+            return diaryImg.get().getImgUrl();
         }
         return null;
     }

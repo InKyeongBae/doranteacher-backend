@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.web.multipart.MultipartFile;
+import org.triathlongirls.doranssam.constant.DiaryStatus;
 import org.triathlongirls.doranssam.constant.DiaryType;
 import org.triathlongirls.doranssam.domain.diaries.Diary;
 import org.triathlongirls.doranssam.domain.diaries.Text;
@@ -69,6 +70,8 @@ public class DiarySaveRequestDto {
                 .wantToImage(wantToImage)
                 .hasImage(false) //일기 생성 이후 이미지 업로드
                 .user(user)
+                .imgStatus(DiaryStatus.PROCESSING)
+                .commentStatus(DiaryStatus.COMPLETE)
                 .build();
     }
 }
