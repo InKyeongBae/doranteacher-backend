@@ -68,9 +68,9 @@ public class DiaryService {
 
 
     public Object deleteById(Long id) {
-        Diary entity = diaryRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("해당 일기가 없습니다. id=" + id));
-        diaryRepository.deleteById(entity.getId());
+        if (!diaryRepository.existsById(id))
+            throw new EntityNotFoundException("해당 일기가 없습니다. id=" + id);
+        diaryRepository.deleteById(id);
         return true;
     }
 

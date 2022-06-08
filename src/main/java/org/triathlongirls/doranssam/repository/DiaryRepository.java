@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public interface DiaryRepository extends JpaRepository<Diary, Long> {
     @Override
-    Optional<Diary> findById(Long aLong);
+    Optional<Diary> findById(Long id);
 
     @Query(value = "select *  " +
             "from diaries d " +
