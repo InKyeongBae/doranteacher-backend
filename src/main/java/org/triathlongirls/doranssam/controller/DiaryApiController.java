@@ -29,8 +29,8 @@ public class DiaryApiController {
     }
 
     @GetMapping("")
-    public ApiResponse<DiaryCatalogDetailDto> diaryCatalogList(@RequestParam Integer year, @RequestParam Integer month) {
-        List<DiaryCatalogDetailDto> diaryCatalogDetails = diaryService.findCatalogByYearMonth(year, month);
+    public ApiResponse<DiaryCatalogDetailDto> diaryCatalogList() {
+        List<DiaryCatalogDetailDto> diaryCatalogDetails = diaryService.findCatalogThisMonth();
         return new ApiResponse<DiaryCatalogDetailDto>().ok(diaryCatalogDetails);
     }
 

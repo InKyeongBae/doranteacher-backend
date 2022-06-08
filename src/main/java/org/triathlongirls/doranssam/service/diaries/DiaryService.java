@@ -38,7 +38,12 @@ public class DiaryService {
                 .orElseThrow(() -> new EntityNotFoundException("사용자가 존재하지 않습니다.: " + username));
 
         // text 및 comment 생성
-        Text text = textService.saveText(requestDto.getText(), requestDto.getIsPrivate());
+        Text text = null;
+        try {
+            text = textService.saveText(requestDto.getText(), requestDto.getIsPrivate());
+        } catch (JsonProcessingException e) {
+            throw new DoranssamException("맞춤법 교정에 실패했습니다.",DoranssamErrorCode.INTERNAL_SERVER_ERROR);
+        }
 
         Diary savedDiary = diaryRepository.save(requestDto.toEntity(user, text));
 
@@ -78,12 +83,12 @@ public class DiaryService {
         return true;
     }
 
-    public List<DiaryCatalogDetailDto> findCatalogByYearMonth(Integer year, Integer month) {
+    public List<DiaryCatalogDetailDto> findCatalogThisMonth() {
         String username = SecurityUtil.getCurrentUsername();
         User user = userService.findByUsername(username)
                 .orElseThrow(() -> new EntityNotFoundException("사용자가 존재하지 않습니다.: " + username));
 
-        List<Diary> diaryList = diaryRepository.findByYearMonth(year, month, user.getId());
+        List<Diary> diaryList = diaryRepository.findDiaryThisMonth(user.getId());
 
         List<DiaryCatalogDetailDto> diaryCatalogDetails = new ArrayList<>();
         for (Diary diary: diaryList) {
