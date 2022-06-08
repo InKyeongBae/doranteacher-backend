@@ -22,7 +22,7 @@ public class DiaryApiController {
 
     @PostMapping(name="", consumes="multipart/form-data")
     public ApiResponse<DiarySaveResponseDto> createDiary(
-            @RequestParam("images") MultipartFile multipartFile,
+            @RequestParam(value = "images", required = false) MultipartFile multipartFile,
             @RequestParam("data") String diaryData) throws JsonProcessingException {
         DiarySaveRequestDto requestDto = objectMapper.readValue(diaryData, DiarySaveRequestDto.class);
         return new ApiResponse<DiarySaveResponseDto>().ok(List.of(diaryService.save(requestDto, multipartFile)));
