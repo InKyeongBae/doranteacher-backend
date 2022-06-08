@@ -42,7 +42,7 @@ public class DiaryService {
         if (multipartFile != null && !multipartFile.isEmpty() && !savedDiary.getWantToImage()) {
             DiaryImg diaryImg = new DiaryImg();
             diaryImg.setDiary(savedDiary);
-            savedDiary.setHasImage(true);
+            savedDiary.completeUploadingImg();
             diaryImgService.saveDiaryImg(diaryImg, multipartFile, username);
         }
 
@@ -89,7 +89,9 @@ public class DiaryService {
                             diary.getDate(),
                             diary.loadSelectedImgUrl(),
                             diary.getCreated_at(),
-                            diary.getUpdated_at()
+                            diary.getUpdated_at(),
+                            diary.getImgStatus().toString(),
+                            diary.getCommentStatus().toString()
                     )
             );
         }

@@ -31,6 +31,8 @@ public class DiaryDetailResponseDto {
     private String original_text;
     private String correct_text;
     private String selectedImage;
+    private String imgStatus;
+    private String commentStatus;
 
     public static DiaryDetailResponseDto of(Diary diary) {
         List<String> keyword_list = List.of(diary.getKeywords().split(","));
@@ -50,7 +52,9 @@ public class DiaryDetailResponseDto {
                 diary.getWritingStep().getValue(),
                 diary.getText().getOriginalText(),
                 diary.getText().getCorrectText(),
-                diary.loadSelectedImgUrl()
+                diary.loadSelectedImgUrl(),
+                diary.getImgStatus().toString(),
+                diary.getCommentStatus().toString()
         );
     }
 }

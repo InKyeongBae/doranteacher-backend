@@ -17,5 +17,7 @@ public class DiaryCatalogDetailDto {
     private String diaryImgUrl;
     private LocalDateTime diaryCreatedAt;
     private LocalDateTime diaryUpdatedAt;
+    private String imgStatus;
+    private String commentStatus;
 
 }
