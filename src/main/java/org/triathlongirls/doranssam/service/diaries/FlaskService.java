@@ -15,7 +15,7 @@ public class FlaskService {
 
     public FlaskResponseDto requestToFlask(String text) throws JsonProcessingException {
         RestTemplate restTemplate = new RestTemplate();
-        String url = "http://localhost:4000/recommend";
+        String url = "http://localhost:8080/recommend";
 
         // Body set
         MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
@@ -25,18 +25,13 @@ public class FlaskService {
         // Combine Message
         HttpEntity<?> requestMessage = new HttpEntity<>(body, httpHeaders);
 
-//        // Request and getResponse
-//        HttpEntity<String> response = restTemplate.postForEntity(url, requestMessage, String.class);
-//
-
-        RestTemplate restTemplate2 = new RestTemplate();
-        ResponseEntity<String> responseEntity = restTemplate2.exchange("http://localhost:4000/recommend", HttpMethod.POST,
-                requestMessage, String.class);
+        // Request and getResponse
+        HttpEntity<String> response = restTemplate.postForEntity(url, requestMessage, String.class);
 
         // Response Body 파싱
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
-        FlaskResponseDto dto = objectMapper.readValue(responseEntity.getBody(), FlaskResponseDto.class);
+        FlaskResponseDto dto = objectMapper.readValue(response.getBody(), FlaskResponseDto.class);
 
         return dto;
     }
