@@ -12,7 +12,7 @@ public enum DiaryType {
     효도일기("FILIAL_DIARY"),
     요리일기("COOKING_DIARY"),
     감상일기("APPRECIATION_DIARY"),
-    사청일기("WATCH_DIARY"),
+    시청일기("WATCH_DIARY"),
     소식일기("NEWS_DIARY"),
     관찰일기("OBSERVATION_DIARY"),
     독서일기("READING_DIARY"),
