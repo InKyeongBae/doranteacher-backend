@@ -5,7 +5,10 @@ import org.springframework.stereotype.Service;
 import org.triathlongirls.doranssam.constant.DiaryQuestion;
 import org.triathlongirls.doranssam.constant.DiaryType;
 import org.triathlongirls.doranssam.dto.DiaryTypeRecommendResult;
+import org.triathlongirls.doranssam.util.dl4j.Word2VecUtil;
 
+import java.io.FileNotFoundException;
+import java.io.UnsupportedEncodingException;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -21,23 +24,23 @@ public class DiaryTypeService {
                 .map(Enum::name)
                 .collect(Collectors.toList());
 
-        List<DiaryTypeRecommendResult> results = new ArrayList<>();
-//        try {
-//            HashMap<String, Double> wordMap = Word2VecUtil.calculateSimilarity(diaryTypeList, keywordList);
-//            Iterator<Map.Entry<String, Double>> entries = wordMap.entrySet().iterator();
-//            while (entries.hasNext()) {
-//                Map.Entry<String, Double> entry = entries.next();
-//                results.add(new DiaryTypeRecommendResult(
-//                        entry.getKey(),
-//                        entry.getValue()
-//                ));
-//            }
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        } catch (UnsupportedEncodingException e) {
-//            e.printStackTrace();
-//        }
-        return results;
+        List<DiaryTypeRecommendResult> recommendResults = new ArrayList<>();
+        try {
+            HashMap<String, Double> wordMap = Word2VecUtil.calculateSimilarity(diaryTypeList, keywordList);
+            Iterator<Map.Entry<String, Double>> entries = wordMap.entrySet().iterator();
+
+            List<Map.Entry<String, Double>> results = new ArrayList<>();
+            while (entries.hasNext()) {
+                results.add(entries.next());
+            }
+            // 계산 결과 정렬
+            results.sort((o1, o2) -> (int) (o1.getValue() - o2.getValue()));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return recommendResults;
     }
 
     public List<DiaryTypeRecommendResult> recommendTempDiaryType(String keywords) {
