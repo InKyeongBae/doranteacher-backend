@@ -29,7 +29,7 @@ public class AuthApiController {
     }
 
     @PostMapping("/reissue")
-    public ApiResponse<JwtTokenDto> reissue(@RequestBody JwtTokenRequestDto jwtTokenRequestDto) {
+    public ApiResponse<JwtTokenDto> reissue(@Valid @RequestBody JwtTokenRequestDto jwtTokenRequestDto) {
         return new ApiResponse<JwtTokenDto>().ok(List.of(authService.reissue(jwtTokenRequestDto)));
     }
 }

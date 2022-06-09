@@ -10,6 +10,7 @@ import org.triathlongirls.doranssam.domain.diaries.Diary;
 import org.triathlongirls.doranssam.domain.diaries.DiaryImg;
 import org.triathlongirls.doranssam.dto.DiaryDetailResponseDto;
 import org.triathlongirls.doranssam.dto.RecommendImageRequest;
+import org.triathlongirls.doranssam.dto.RecommendImageSelect;
 import org.triathlongirls.doranssam.exception.DoranssamErrorCode;
 import org.triathlongirls.doranssam.exception.DoranssamException;
 import org.triathlongirls.doranssam.repository.DiaryImgRepository;
@@ -17,6 +18,8 @@ import org.triathlongirls.doranssam.repository.DiaryRepository;
 import org.triathlongirls.doranssam.service.S3UploaderService;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
@@ -49,7 +52,7 @@ public class DiaryImgService {
     public DiaryDetailResponseDto selectRecommendImage(RecommendImageRequest recommendImageRequest) {
 
         Diary diary = diaryRepository.getById(recommendImageRequest.getDiaryId());
-        DiaryImg diaryImg = findRecommendImage(recommendImageRequest.getDiaryId());
+        DiaryImg diaryImg = diaryImgRepository.getById(recommendImageRequest.getSelectedImgId());
         diaryImg.selectDiaryImg();
         diary.completeUploadingImg();
         diaryRepository.save(diary);
@@ -57,22 +60,35 @@ public class DiaryImgService {
         return DiaryDetailResponseDto.of(diary);
     }
 
-    public DiaryImg findRecommendImage(Long diaryId) {
+    public List<RecommendImageSelect> findRecommendImages(Long diaryId) {
         Diary diary = diaryRepository.getById(diaryId);
-        DiaryImg diaryImg = diaryImgRepository.getDiaryImgByDiaryAndIsSelected(diary, false)
-                .orElseThrow(() -> new DoranssamException("추천 이미지를 찾을 수 없습니다.", DoranssamErrorCode.ENTITY_NOT_FOUND));
-        return diaryImg;
+        List<DiaryImg> recommendImgs = diaryImgRepository.findDiaryImgsByDiaryAndIsSelected(diary, false);
+        if (recommendImgs.isEmpty()) {
+            throw new DoranssamException("추천 이미지를 찾을 수 없습니다.", DoranssamErrorCode.ENTITY_NOT_FOUND);
+        }
+
+        List<RecommendImageSelect> results = new ArrayList<>();
+        for (DiaryImg img : recommendImgs) {
+            results.add(new RecommendImageSelect(img.getId(), img.getImgUrl()));
+        }
+        return results;
     }
 
     @Async
     @Transactional
-    public void generateRecommendImage(DiaryImg diaryImg, Diary diary) {
+    public void generateRecommendImage(Diary diary) {
         try {
-            String url = "https://doran-image.s3.ap-northeast-2.amazonaws.com/recommend";
-            Thread.sleep(TimeUnit.MINUTES.toMillis(3));
-            diaryImg.updateDiaryImg("", "", url, false);
+            String url = "https://doran-image.s3.ap-northeast-2.amazonaws.com/recommend_";
+            String extension = ".png";
+            for (int i = 1; i < 9; i++) {
+                DiaryImg diaryImg = new DiaryImg();
+                diaryImg.setDiary(diary);
+//                Thread.sleep(TimeUnit.MINUTES.toMillis(3));
+                Thread.sleep(1);
+                diaryImg.updateDiaryImg("", "", url + i + extension, false);
+                diaryImgRepository.save(diaryImg);
+            }
             diary.needRecommendImgAction();
-            diaryImgRepository.save(diaryImg);
             diaryRepository.save(diary);
             log.info("endAsync");
         } catch (InterruptedException e) {
