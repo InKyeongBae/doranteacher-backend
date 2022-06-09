@@ -25,13 +25,11 @@ public class DiaryTypeApiController {
 
     @GetMapping("/questions/step2")
     public ApiResponse<String> step2QuestionList(@RequestParam String type) throws UnsupportedEncodingException {
-        String diaryType = URLDecoder.decode(type, "UTF-8");
-        return new ApiResponse<String>().ok(List.of(diaryTypeService.getStep2Questions(diaryType)));
+        return new ApiResponse<String>().ok(List.of(diaryTypeService.getStep2Questions(type)));
     }
 
     @GetMapping("/questions/step1")
     public ApiResponse<String> step1QuestionList(@RequestParam String type) throws UnsupportedEncodingException {
-        String diaryType = URLDecoder.decode(type, "UTF-8");
-        return new ApiResponse<String>().ok(diaryTypeService.getStep1Questions(diaryType));
+        return new ApiResponse<String>().ok(diaryTypeService.getStep1Questions(type));
     }
 }

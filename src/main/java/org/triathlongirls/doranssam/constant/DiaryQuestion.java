@@ -75,6 +75,17 @@ public class DiaryQuestion {
             )
     );
 
+    private static final List<String> ENVIRONMENTAL_DIARY2 = List.of(
+            "무심코 지나쳤던 주변 환경을 다시 돌아보아요.\n많은 음식은 어디서 왔을까요?\n청소시간, 넘쳐나는 쓰레기들은 어떻게 될까요?\n날씨는 왜 점점 더 더워지고 추워지는 걸까요?"
+    );
+    private static final List<List<String>> ENVIRONMENTAL_DIARY1 = List.of(
+            List.of(
+                    "오늘 날씨는 어땠나요?",
+                    "작년, 또는 더 오래전과 비교했을 때 어떤 날씨였나요?",
+                    "날씨가 달라진다면 이유가 무엇일까요?",
+                    "우리는 "
+            )
+    );
     private static final List<String> COMPLIMENT_DIARY2 = List.of(
             "칭찬의 말을 남겨보아요\n누구를 가장 칭찬하고 싶나요?\n어떤 점에서 그렇게 생각했나요?\n칭찬하는 글을 남기고 나니 어떤 마음이 드나요?"
     );
@@ -115,6 +126,22 @@ public class DiaryQuestion {
                     "인상 깊은 내용이 있나요? 이유가 무엇인가요?",
                     "글을 읽으면서 배운점이 무엇인가요?",
                     "글을 읽고 난후 어떤 마음이 들었나요? 느낀 점이 무엇인가요?"
+            )
+    );
+
+
+    private static final List<String> APPRECIATION_DIARY2 = List.of(
+            "오늘 무엇을 감상했나요?\n가장 기억이 남았던 것이 무엇이었나요?\n감상 후 어떤 생각이 들었나요?\n",
+            "오늘 무엇을 감상했나요?\n가장 기억이 남았던 것이 무엇이었나요?\n다른 사람에게도 감상한 것을 알려준다면 어떻게 설명할 수 있을까요?\n"
+    );
+
+    private static final List<List<String>> APPRECIATION_DIARY1 = List.of(
+            List.of(
+                    "오늘 무엇을 감상했나요?",
+                    "감상하게된 이유가 무엇인가요?",
+                    "감상하면서 가장 기억에 남는 것이 무엇이었나요?",
+                    "감상 후 어떤 마음이 들었나요?",
+                    "주변 사람들에게 설명해준다면 어떻게 말할 수 있을까요?"
             )
     );
 
@@ -174,6 +201,20 @@ public class DiaryQuestion {
             )
     );
 
+    private static final List<String> LETTER_DIARY2 = List.of(
+            "주변사람에게 하고 싶은 이야기를 담아 편지 일기를 적어보아요.\n상대가 편지를 받는다면 어떤 마음일까요?\n편지를 적고나니 어떤 마음이 들었나요?"
+    );
+
+    private static final List<List<String>> LETTER_DIARY1 = List.of(
+            List.of(
+                    "편지를 보내고 싶은 사람이 있다면 누구인가요?",
+                    "편지에 어떤 이야기를 적고 싶나요?",
+                    "일기에 편지를 적어봅시다.",
+                    "상대가 편지를 받는다면 어떤 마음일까요?",
+                    "편지를 적고나니 어떤 마음이 들었나요?"
+            )
+    );
+
     private static final List<String> FREE_DIARY2 = List.of(
             "오늘 있었던 일을 자유롭게 적어보아요.\n그 일을 일기에 기록하고 싶은 이유는 무엇인가요?\n다음에도 비슷한 일이 생기면, 그 때는 어떻게 달라질 수 있을까요?"
     );
@@ -188,12 +229,73 @@ public class DiaryQuestion {
             )
     );
 
+
+    private static final List<String> OBJECT_DIARY2 = List.of(
+            "주변의 사물과 대화를 나누어 보아요.\n물건이 마음이 있다면 어떤 생각을 할까요?\n사물에게 느낀 점이 무엇인가요?",
+            "내가 사물이라면 어땠을까 상상해보아요\n그 사물의 역할이 되면 어떨까요?\n사물이 되면 사람들을 어떻게 생각할까요?"
+    );
+    private static final List<List<String>> OBJECT_DIARY1 = List.of(
+            List.of(
+                    "내가 주변의 사물이 된다면 어떤 사물이 되고 싶나요?",
+                    "그 사물의 역할은 무언인가요?",
+                    "사물이 되면 사람들을 어떻게 생각할까요?",
+                    "앞으로 그 사물을 어떻게 다룰 것 인가요?",
+                    "사물의 입장에서 생각해보니 어떤 마음이 들었나요?"
+            )
+    );
+
+
     public static String getStep2Question(DiaryType type) {
         String key = type.getKey();
         List<String> questions = new ArrayList<>();
         switch (key) {
+            case "SCIENCE_DIARY":
+                questions = SCIENCE_DIARY2;
+                break;
+            case "STUDY_DIARY":
+                questions = STUDY_DIARY2;
+                break;
+            case "EVENT_DIARY":
+                questions = EVENT_DIARY2;
+                break;
+            case "ENVIRONMENTAL_DIARY":
+                questions = ENVIRONMENTAL_DIARY2;
+                break;
+            case "COMPLIMENT_DIARY":
+                questions = COMPLIMENT_DIARY2;
+                break;
+            case "FILIAL_DIARY":
+                questions = FILIAL_DIARY2;
+                break;
             case "COOKING_DIARY":
                 questions = COOKING_DIARY2;
+                break;
+            case "APPRECIATION_DIARY":
+                questions = APPRECIATION_DIARY2;
+                break;
+            case "WATCH_DIARY":
+                questions = WATCH_DIARY2;
+                break;
+            case "NEWS_DIARY":
+                questions = NEWS_DIARY2;
+                break;
+            case "OBSERVATION_DIARY":
+                questions = OBSERVATION_DIARY2;
+                break;
+            case "READING_DIARY":
+                questions = READING_DIARY2;
+                break;
+            case "TRAVEL_DIARY":
+                questions = TRAVEL_DIARY2;
+                break;
+            case "OBJECT_DIARY":
+                questions = OBJECT_DIARY2;
+                break;
+            case "LETTER_DIARY":
+                questions = LETTER_DIARY2;
+                break;
+            case "FREE_DIARY":
+                questions = FREE_DIARY2;
                 break;
             default:
                 throw new DoranssamException("invalid diary key", DoranssamErrorCode.INTERNAL_SERVER_ERROR);
@@ -207,8 +309,53 @@ public class DiaryQuestion {
         String key = type.getKey();
         List<List<String>> questions_list = new ArrayList<>();
         switch (key) {
+            case "SCIENCE_DIARY":
+                questions_list = SCIENCE_DIARY1;
+                break;
+            case "STUDY_DIARY":
+                questions_list = STUDY_DIARY1;
+                break;
+            case "EVENT_DIARY":
+                questions_list = EVENT_DIARY1;
+                break;
+            case "ENVIRONMENTAL_DIARY":
+                questions_list = ENVIRONMENTAL_DIARY1;
+                break;
+            case "COMPLIMENT_DIARY":
+                questions_list = COMPLIMENT_DIARY1;
+                break;
+            case "FILIAL_DIARY":
+                questions_list = FILIAL_DIARY1;
+                break;
             case "COOKING_DIARY":
                 questions_list = COOKING_DIARY1;
+                break;
+            case "APPRECIATION_DIARY":
+                questions_list = APPRECIATION_DIARY1;
+                break;
+            case "WATCH_DIARY":
+                questions_list = WATCH_DIARY1;
+                break;
+            case "NEWS_DIARY":
+                questions_list = NEWS_DIARY1;
+                break;
+            case "OBSERVATION_DIARY":
+                questions_list = OBSERVATION_DIARY1;
+                break;
+            case "READING_DIARY":
+                questions_list = READING_DIARY1;
+                break;
+            case "TRAVEL_DIARY":
+                questions_list = TRAVEL_DIARY1;
+                break;
+            case "OBJECT_DIARY":
+                questions_list = OBJECT_DIARY1;
+                break;
+            case "LETTER_DIARY":
+                questions_list = LETTER_DIARY1;
+                break;
+            case "FREE_DIARY":
+                questions_list = FREE_DIARY1;
                 break;
             default:
                 throw new DoranssamException("invalid diary key", DoranssamErrorCode.INTERNAL_SERVER_ERROR);
