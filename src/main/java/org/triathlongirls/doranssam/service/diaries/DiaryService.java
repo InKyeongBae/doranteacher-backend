@@ -138,18 +138,4 @@ public class DiaryService {
             return false;
         return true;
     }
-
-    public DiaryDetailResponseDto selectImage(Long diaryId, MultipartFile multipartFile) {
-        String username = SecurityUtil.getCurrentUsername();
-        Diary diary = diaryRepository.getById(diaryId);
-
-        if (multipartFile != null && !multipartFile.isEmpty() && diary.getWantToImage()) {
-            DiaryImg diaryImg = new DiaryImg();
-            diaryImg.setDiary(diary);
-            diary.completeUploadingImg();
-            diaryImgService.saveDiaryImg(diaryImg, multipartFile, username);
-        }
-
-        return DiaryDetailResponseDto.of(diary);
-    }
 }
