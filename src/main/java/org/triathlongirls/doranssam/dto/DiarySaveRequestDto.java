@@ -14,6 +14,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -34,7 +35,11 @@ public class DiarySaveRequestDto {
     private String keywords;
 
     @NotBlank(message = "일기 글은 필수 입력 값입니다.")
-    private String text;
+    private String originalText;
+
+    private List<String> correctText;
+
+    private String comment;
 
     @NotNull(message = "일기 유형은 필수 입력 값입니다.")
     private DiaryType diaryType;

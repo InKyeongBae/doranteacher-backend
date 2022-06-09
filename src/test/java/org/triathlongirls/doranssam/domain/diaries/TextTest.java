@@ -9,6 +9,8 @@ import org.triathlongirls.doranssam.exception.EntityNotFoundException;
 import org.triathlongirls.doranssam.repository.CommentRepository;
 import org.triathlongirls.doranssam.repository.TextRepository;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
@@ -30,7 +32,7 @@ class TextTest {
 
         Text text = Text.builder()
                 .originalText("originalText")
-                .correctText("correctText")
+                .correctText(List.of("correctText"))
                 .highlightedText("highlightedText")
                 .hasSynonym(true)
                 .build();

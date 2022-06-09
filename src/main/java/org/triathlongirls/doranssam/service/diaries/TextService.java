@@ -4,12 +4,10 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import org.glassfish.jersey.message.internal.AcceptableMediaType;
 import org.h2.util.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -29,32 +27,37 @@ public class TextService {
     private final ObjectMapper objectMapper;
 
 //    @Value("${doranssam.api-server.host}")
-//    public String commentHost;
+    private String commentHost = "http://tool.doranssam.com:5000";
 //
 //    @Value("${doranssam.api-server.comment-path}")
-//    public String commentPath;
+    private String commentPath = "/correct";
 
-    public Text saveText(String original_text, Boolean isPrivate) {
+    public Text saveText(
+            String originalText,
+            List<String> correctText,
+            String comment,
+            Boolean isPrivate) {
+
         Text text = new Text();
-
         if (!isPrivate) {
 //            RestTemplate restTemplate = new RestTemplate();
 //            String commentUrl = commentHost + commentPath;
 //            String jsonText = "{\"text\":\"" + original_text + "\"}";
 //            HttpHeaders headers = new HttpHeaders();
 //            headers.setContentType(MediaType.APPLICATION_JSON);
+//            headers.setAccept(List.of(MediaType.ALL));
 //
-//            HttpEntity<String> request = new HttpEntity<String>(jsonText, headers);
-//            String response = restTemplate.postForObject(commentUrl, request, String.class);
-//            JsonNode root = objectMapper.readTree(response);
+//            HttpEntity<String> request = new HttpEntity<>(jsonText, headers);
+//            ResponseEntity<String> response = restTemplate.exchange(commentUrl, HttpMethod.POST, request, String.class);
+//            JsonNode root = objectMapper.readTree(response.getBody());
 //            String result = root.get("result").toString();
 
-            Comment comment = Comment.builder()
-                    .content("오늘 하루도 많은 일이 있었군요. 도란쌤은 언제나 응원하고 있어요.")
+            Comment newComment = Comment.builder()
+                    .content(comment)
                     .build();
-            text.setComment(comment);
+            text.setComment(newComment);
         }
-        text.saveText(original_text, original_text);
+        text.saveText(originalText, correctText);
         return text;
     }
 }

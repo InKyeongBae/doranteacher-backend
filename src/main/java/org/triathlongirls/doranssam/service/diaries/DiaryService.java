@@ -6,6 +6,7 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import org.triathlongirls.doranssam.domain.diaries.Comment;
 import org.triathlongirls.doranssam.domain.diaries.Diary;
 import org.triathlongirls.doranssam.domain.diaries.DiaryImg;
 import org.triathlongirls.doranssam.domain.diaries.Text;
@@ -39,10 +40,17 @@ public class DiaryService {
                 .orElseThrow(() -> new EntityNotFoundException("사용자가 존재하지 않습니다.: " + username));
 
         // text 및 comment 생성
-        Text text = null;
-        text = textService.saveText(requestDto.getText(), requestDto.getIsPrivate());
-
-
+        Text text = new Text(
+                requestDto.getOriginalText(),
+                requestDto.getCorrectText(),
+                null,
+                false
+        );
+        if (!requestDto.getIsPrivate()) {
+            Comment comment = new Comment();
+            comment.setContent(requestDto.getComment());
+            text.setComment(comment);
+        }
         Diary savedDiary = diaryRepository.save(requestDto.toEntity(user, text));
 
         // 직접 업로드한 image 파일 S3에 저장
@@ -56,16 +64,7 @@ public class DiaryService {
         return DiarySaveResponseDto.of(savedDiary);
     }
 
-/*
-    @Transactional
-    public Long update(Long id, DiariesUpdateRequestDto requestDto) {
-        Diaries diaries = diariesRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("해당 일기가 없습니다. id=" + id));
-        //diaries.update(requestDto.getTitle());
 
-        return id;
-    }
-*/
     public DiaryDetailResponseDto findById(Long id) {
         Diary entity = diaryRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("해당 일기가 없습니다. id=" + id));
