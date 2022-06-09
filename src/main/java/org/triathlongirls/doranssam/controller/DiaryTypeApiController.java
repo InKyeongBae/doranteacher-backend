@@ -6,6 +6,8 @@ import org.triathlongirls.doranssam.dto.ApiResponse;
 import org.triathlongirls.doranssam.dto.DiaryTypeRecommendResult;
 import org.triathlongirls.doranssam.service.diaries.DiaryTypeService;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -22,12 +24,14 @@ public class DiaryTypeApiController {
     }
 
     @GetMapping("/questions/step2")
-    public ApiResponse<String> step2QuestionList(@RequestParam String type) {
-        return new ApiResponse<String>().ok(List.of(diaryTypeService.getStep2Questions(type)));
+    public ApiResponse<String> step2QuestionList(@RequestParam String type) throws UnsupportedEncodingException {
+        String diaryType = URLDecoder.decode(type, "UTF-8");
+        return new ApiResponse<String>().ok(List.of(diaryTypeService.getStep2Questions(diaryType)));
     }
 
     @GetMapping("/questions/step1")
-    public ApiResponse<String> step1QuestionList(@RequestParam String type) {
-        return new ApiResponse<String>().ok(diaryTypeService.getStep1Questions(type));
+    public ApiResponse<String> step1QuestionList(@RequestParam String type) throws UnsupportedEncodingException {
+        String diaryType = URLDecoder.decode(type, "UTF-8");
+        return new ApiResponse<String>().ok(diaryTypeService.getStep1Questions(diaryType));
     }
 }
