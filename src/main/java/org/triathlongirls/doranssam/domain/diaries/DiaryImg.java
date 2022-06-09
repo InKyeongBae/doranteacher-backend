@@ -24,10 +24,8 @@ public class DiaryImg {
     private String imgUrl;
 
     private Boolean isSelected;
-    private Integer xCoordinate;
-    private Integer yCoordinate;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "diary_id")
     private Diary diary;
 
@@ -39,22 +37,13 @@ public class DiaryImg {
             String oriImgName,
             String imgName,
             String imgUrl,
-            Integer xCoordinate,
-            Integer yCoordinate) {
+            Boolean isSelected
+    ) {
         this.oriImgName = oriImgName;
         this.imgName = imgName;
         this.imgUrl = imgUrl;
-        this.isSelected = true;
-        this.xCoordinate = xCoordinate;
-        this.yCoordinate = yCoordinate;
+        this.isSelected = isSelected;
     }
 
-    public void selectDiaryImg(
-            Integer xCoordinate,
-            Integer yCoordinate
-    ) {
-        this.xCoordinate = xCoordinate;
-        this.yCoordinate = yCoordinate;
-        this.isSelected = true;
-    }
+    public void selectDiaryImg() {this.isSelected = true;}
 }

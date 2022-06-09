@@ -78,7 +78,7 @@ public class Diary extends BaseTimeEntity {
     @JoinColumn(name = "text_id")
     private Text text;
 
-    @OneToMany(mappedBy = "diary")
+    @OneToMany(mappedBy = "diary", cascade = CascadeType.ALL)
     private List<DiaryImg> diaryImgs = new ArrayList<>();
 
     public void setUser(User user) {
@@ -89,6 +89,10 @@ public class Diary extends BaseTimeEntity {
     public void completeUploadingImg() {
         this.hasImage = true;
         this.imgStatus = DiaryStatus.COMPLETE;
+    }
+
+    public void needRecommendImgAction() {
+        this.imgStatus = DiaryStatus.NEED_ACTION;
     }
 
     @Builder
