@@ -83,8 +83,7 @@ public class DiaryImgService {
             for (int i = 1; i < 9; i++) {
                 DiaryImg diaryImg = new DiaryImg();
                 diaryImg.setDiary(diary);
-//                Thread.sleep(TimeUnit.MINUTES.toMillis(3));
-                Thread.sleep(1);
+                Thread.sleep(TimeUnit.MINUTES.toMillis(3));
                 diaryImg.updateDiaryImg("", "", url + i + extension, false);
                 diaryImgRepository.save(diaryImg);
             }
