@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class RecommendImageRequest {
-    private Long diaryId;
-    private Long selectedImgId;
+public class RecommendImageSelect {
+    private Long imgId;
+    private String imgUrl;
 }
