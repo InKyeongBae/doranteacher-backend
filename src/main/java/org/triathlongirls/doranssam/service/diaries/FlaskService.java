@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.*;
 import org.nd4j.linalg.util.LinkedMultiValueMap;
 import org.nd4j.linalg.util.MultiValueMap;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.triathlongirls.doranssam.dto.FlaskResponseDto;
@@ -24,6 +25,7 @@ public class FlaskService {
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
         // Combine Message
         HttpEntity<?> requestMessage = new HttpEntity<>(body, httpHeaders);
+        System.out.println(requestMessage);
         System.out.println("!!!");
         System.out.println(url);
         // Request and getResponse
@@ -31,6 +33,7 @@ public class FlaskService {
         System.out.println(response);
         ObjectMapper mapper = new ObjectMapper();
         String jsonInString = mapper.writeValueAsString(response.getBody());
+
 
         // Response Body 파싱
 //        ObjectMapper objectMapper = new ObjectMapper();
