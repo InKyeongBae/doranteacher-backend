@@ -13,7 +13,7 @@ import org.triathlongirls.doranssam.dto.FlaskResponseDto;
 @Service
 public class FlaskService {
 
-    public FlaskResponseDto requestToFlask(String text) throws JsonProcessingException {
+    public String requestToFlask(String text) throws JsonProcessingException {
         RestTemplate restTemplate = new RestTemplate();
         String url = "http://localhost:8080/recommend";
 
@@ -24,16 +24,20 @@ public class FlaskService {
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
         // Combine Message
         HttpEntity<?> requestMessage = new HttpEntity<>(body, httpHeaders);
-
+        System.out.println("!!!");
+        System.out.println(url);
         // Request and getResponse
         HttpEntity<String> response = restTemplate.postForEntity(url, requestMessage, String.class);
+        System.out.println(response);
+        ObjectMapper mapper = new ObjectMapper();
+        String jsonInString = mapper.writeValueAsString(response.getBody());
 
         // Response Body 파싱
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
-        FlaskResponseDto dto = objectMapper.readValue(response.getBody(), FlaskResponseDto.class);
+//        ObjectMapper objectMapper = new ObjectMapper();
+//        objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
+//        FlaskResponseDto dto = objectMapper.readValue(response.getBody(), FlaskResponseDto.class);
 
-        return dto;
+        return jsonInString;
     }
 
 }

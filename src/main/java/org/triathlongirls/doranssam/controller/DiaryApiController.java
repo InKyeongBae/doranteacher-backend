@@ -37,8 +37,9 @@ public class DiaryApiController {
     @PatchMapping("/recommend/flask")
     public String recommend(@RequestParam Integer diaryId, @RequestParam String text) throws JsonProcessingException {
         System.out.println(diaryId);
-        FlaskResponseDto flaskResponseDto = flaskService.requestToFlask(text);
-        return flaskResponseDto.getResult();
+        System.out.println("!!!");
+        String flaskResponseDto = flaskService.requestToFlask(text);
+        return flaskResponseDto;
     }
 
     @GetMapping("")
