@@ -15,7 +15,7 @@ public class FlaskService {
 
     public String requestToFlask(String text) throws JsonProcessingException {
         RestTemplate restTemplate = new RestTemplate();
-        String url = "http://localhost:8080/recommend";
+        String url = "http://127.0.0.1:8080/recommend";
 
         // Body set
         MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
