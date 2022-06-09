@@ -68,6 +68,7 @@ public class DiaryTypeService {
             diaryTypeList = Stream.of(DiaryType.values())
                     .map(Enum::name)
                     .collect(Collectors.toList());
+            Collections.shuffle(diaryTypeList);
         }
 
         List<DiaryTypeRecommendResult> results = new ArrayList<>();
