@@ -38,7 +38,7 @@ public class DiaryImgService {
             String savedName = uuid + extension;
             String imgUrl = s3UploaderService.upload(multipartFile, savedName, username);
 
-            diaryImg.updateDiaryImg(originalFilename, savedName, imgUrl);
+            diaryImg.updateDiaryImg(originalFilename, savedName, imgUrl, true);
             diaryImgRepository.save(diaryImg);
         } catch (IOException e) {
             throw new DoranssamException(DoranssamErrorCode.S3_UPLOAD_FAILED);
@@ -70,7 +70,7 @@ public class DiaryImgService {
         try {
             String url = "https://doran-image.s3.ap-northeast-2.amazonaws.com/recommend";
             Thread.sleep(TimeUnit.MINUTES.toMillis(3));
-            diaryImg.updateDiaryImg("", "", url);
+            diaryImg.updateDiaryImg("", "", url, false);
             diary.needRecommendImgAction();
             diaryImgRepository.save(diaryImg);
             diaryRepository.save(diary);

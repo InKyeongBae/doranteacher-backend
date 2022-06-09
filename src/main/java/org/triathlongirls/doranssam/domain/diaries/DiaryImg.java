@@ -36,12 +36,13 @@ public class DiaryImg {
     public void updateDiaryImg(
             String oriImgName,
             String imgName,
-            String imgUrl
+            String imgUrl,
+            Boolean isSelected
     ) {
         this.oriImgName = oriImgName;
         this.imgName = imgName;
         this.imgUrl = imgUrl;
-        this.isSelected = true;
+        this.isSelected = isSelected;
     }
 
     public void selectDiaryImg() {this.isSelected = true;}
