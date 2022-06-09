@@ -27,7 +27,7 @@ public class DiaryImg {
     private Integer xCoordinate;
     private Integer yCoordinate;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "diary_id")
     private Diary diary;
 

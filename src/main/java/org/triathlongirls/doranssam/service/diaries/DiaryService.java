@@ -2,6 +2,7 @@ package org.triathlongirls.doranssam.service.diaries;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +26,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class DiaryService {
@@ -57,10 +59,14 @@ public class DiaryService {
         if (multipartFile != null && !multipartFile.isEmpty() && !savedDiary.getWantToImage()) {
             DiaryImg diaryImg = new DiaryImg();
             diaryImg.setDiary(savedDiary);
+            diaryImgService.saveDiaryImg(diaryImg, multipartFile, username, null, null);
             savedDiary.completeUploadingImg();
-            diaryImgService.saveDiaryImg(diaryImg, multipartFile, username);
+        } else if (savedDiary.getWantToImage()) {
+            log.info("[일기 그림 추천] 비동기 호출");
+            DiaryImg diaryImg = new DiaryImg();
+            diaryImg.setDiary(savedDiary);
+            diaryImgService.generateRecommendImage(diaryImg, savedDiary);
         }
-
         return DiarySaveResponseDto.of(savedDiary);
     }
 

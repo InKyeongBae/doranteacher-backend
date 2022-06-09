@@ -1,6 +1,8 @@
 package org.triathlongirls.doranssam.service.diaries;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -13,11 +15,12 @@ import org.triathlongirls.doranssam.exception.DoranssamException;
 import org.triathlongirls.doranssam.repository.DiaryImgRepository;
 import org.triathlongirls.doranssam.repository.DiaryRepository;
 import org.triathlongirls.doranssam.service.S3UploaderService;
-import org.triathlongirls.doranssam.util.SecurityUtil;
 
 import java.io.IOException;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class DiaryImgService {
@@ -62,5 +65,20 @@ public class DiaryImgService {
         DiaryImg diaryImg = diaryImgRepository.getDiaryImgByDiaryAndIsSelected(diary, false)
                 .orElseThrow(() -> new DoranssamException("추천 이미지를 찾을 수 없습니다.", DoranssamErrorCode.ENTITY_NOT_FOUND));
         return diaryImg;
+    }
+
+    @Async
+    @Transactional
+    public void generateRecommendImage(DiaryImg diaryImg, Diary diary) {
+        try {
+            String url = "https://doran-image.s3.ap-northeast-2.amazonaws.com/recommend";
+            Thread.sleep(TimeUnit.MINUTES.toMillis(3));
+            diaryImg.updateDiaryImg("", "", url, null, null);
+            diary.needRecommendImgAction();
+            diaryRepository.save(diary);
+            log.info("endAsync");
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }
