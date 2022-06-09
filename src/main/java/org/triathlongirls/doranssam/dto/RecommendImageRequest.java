@@ -9,6 +9,4 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class RecommendImageRequest {
     private Long diaryId;
-    private Integer xCoordinate;
-    private Integer yCoordinate;
 }

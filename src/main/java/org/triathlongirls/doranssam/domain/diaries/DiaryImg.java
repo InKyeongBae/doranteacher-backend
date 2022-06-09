@@ -24,8 +24,6 @@ public class DiaryImg {
     private String imgUrl;
 
     private Boolean isSelected;
-    private Integer xCoordinate;
-    private Integer yCoordinate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "diary_id")
@@ -38,23 +36,13 @@ public class DiaryImg {
     public void updateDiaryImg(
             String oriImgName,
             String imgName,
-            String imgUrl,
-            Integer xCoordinate,
-            Integer yCoordinate) {
+            String imgUrl
+    ) {
         this.oriImgName = oriImgName;
         this.imgName = imgName;
         this.imgUrl = imgUrl;
         this.isSelected = true;
-        this.xCoordinate = xCoordinate;
-        this.yCoordinate = yCoordinate;
     }
 
-    public void selectDiaryImg(
-            Integer xCoordinate,
-            Integer yCoordinate
-    ) {
-        this.xCoordinate = xCoordinate;
-        this.yCoordinate = yCoordinate;
-        this.isSelected = true;
-    }
+    public void selectDiaryImg() {this.isSelected = true;}
 }

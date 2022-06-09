@@ -30,7 +30,7 @@ public class DiaryImgService {
     private final S3UploaderService s3UploaderService;
 
     @Transactional
-    public void saveDiaryImg(DiaryImg diaryImg, MultipartFile multipartFile, String username, Integer x, Integer y) {
+    public void saveDiaryImg(DiaryImg diaryImg, MultipartFile multipartFile, String username) {
         try {
             String originalFilename = multipartFile.getOriginalFilename();
             UUID uuid = UUID.randomUUID();
@@ -38,7 +38,7 @@ public class DiaryImgService {
             String savedName = uuid + extension;
             String imgUrl = s3UploaderService.upload(multipartFile, savedName, username);
 
-            diaryImg.updateDiaryImg(originalFilename, savedName, imgUrl, x, y);
+            diaryImg.updateDiaryImg(originalFilename, savedName, imgUrl);
             diaryImgRepository.save(diaryImg);
         } catch (IOException e) {
             throw new DoranssamException(DoranssamErrorCode.S3_UPLOAD_FAILED);
@@ -50,10 +50,7 @@ public class DiaryImgService {
 
         Diary diary = diaryRepository.getById(recommendImageRequest.getDiaryId());
         DiaryImg diaryImg = findRecommendImage(recommendImageRequest.getDiaryId());
-        diaryImg.selectDiaryImg(
-                recommendImageRequest.getXCoordinate(),
-                recommendImageRequest.getYCoordinate()
-        );
+        diaryImg.selectDiaryImg();
         diary.completeUploadingImg();
         diaryRepository.save(diary);
 
@@ -73,8 +70,9 @@ public class DiaryImgService {
         try {
             String url = "https://doran-image.s3.ap-northeast-2.amazonaws.com/recommend";
             Thread.sleep(TimeUnit.MINUTES.toMillis(3));
-            diaryImg.updateDiaryImg("", "", url, null, null);
+            diaryImg.updateDiaryImg("", "", url);
             diary.needRecommendImgAction();
+            diaryImgRepository.save(diaryImg);
             diaryRepository.save(diary);
             log.info("endAsync");
         } catch (InterruptedException e) {
