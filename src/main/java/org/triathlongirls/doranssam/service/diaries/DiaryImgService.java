@@ -77,21 +77,16 @@ public class DiaryImgService {
     @Async
     @Transactional
     public void generateRecommendImage(Diary diary) {
-        try {
-            String url = "https://doran-image.s3.ap-northeast-2.amazonaws.com/recommend_";
-            String extension = ".png";
-            for (int i = 1; i < 9; i++) {
-                DiaryImg diaryImg = new DiaryImg();
-                diaryImg.setDiary(diary);
-                Thread.sleep(TimeUnit.MINUTES.toMillis(3));
-                diaryImg.updateDiaryImg("", "", url + i + extension, false);
-                diaryImgRepository.save(diaryImg);
-            }
-            diary.needRecommendImgAction();
-            diaryRepository.save(diary);
-            log.info("endAsync");
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        String url = "https://doran-image.s3.ap-northeast-2.amazonaws.com/recommend_";
+        String extension = ".png";
+        for (int i = 1; i < 9; i++) {
+            DiaryImg diaryImg = new DiaryImg();
+            diaryImg.setDiary(diary);
+            diaryImg.updateDiaryImg("", "", url + i + extension, false);
+            diaryImgRepository.save(diaryImg);
         }
+        diary.needRecommendImgAction();
+        diaryRepository.save(diary);
+        log.info("endAsync");
     }
 }

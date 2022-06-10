@@ -47,29 +47,22 @@ public class DiaryTypeService {
         List<String> keywordList = Arrays.asList(keywords.split(","));
 
         List<String> diaryTypeList = new ArrayList<>();
-        if (keywordList.contains("학교")) {
-            diaryTypeList.add(DiaryType.배움일기.toString());
-            diaryTypeList.add(DiaryType.여행일기.toString());
-            diaryTypeList.add(DiaryType.과학일기.toString());
-            diaryTypeList.add(DiaryType.편지일기.toString());
-            diaryTypeList.add(DiaryType.독서일기.toString());
-            diaryTypeList.add(DiaryType.관찰일기.toString());
-            diaryTypeList.add(DiaryType.소식일기.toString());
-            diaryTypeList.add(DiaryType.시청일기.toString());
-            diaryTypeList.add(DiaryType.사물일기.toString());
-            diaryTypeList.add(DiaryType.감상일기.toString());
-            diaryTypeList.add(DiaryType.칭찬일기.toString());
-            diaryTypeList.add(DiaryType.효도일기.toString());
-            diaryTypeList.add(DiaryType.사건일기.toString());
-            diaryTypeList.add(DiaryType.요리일기.toString());
-            diaryTypeList.add(DiaryType.환경일기.toString());
-            diaryTypeList.add(DiaryType.자유일기.toString());
-        } else {
-            diaryTypeList = Stream.of(DiaryType.values())
-                    .map(Enum::name)
-                    .collect(Collectors.toList());
-            Collections.shuffle(diaryTypeList);
-        }
+        diaryTypeList.add(DiaryType.배움일기.toString());
+        diaryTypeList.add(DiaryType.여행일기.toString());
+        diaryTypeList.add(DiaryType.과학일기.toString());
+        diaryTypeList.add(DiaryType.편지일기.toString());
+        diaryTypeList.add(DiaryType.독서일기.toString());
+        diaryTypeList.add(DiaryType.관찰일기.toString());
+        diaryTypeList.add(DiaryType.소식일기.toString());
+        diaryTypeList.add(DiaryType.시청일기.toString());
+        diaryTypeList.add(DiaryType.사물일기.toString());
+        diaryTypeList.add(DiaryType.감상일기.toString());
+        diaryTypeList.add(DiaryType.칭찬일기.toString());
+        diaryTypeList.add(DiaryType.효도일기.toString());
+        diaryTypeList.add(DiaryType.사건일기.toString());
+        diaryTypeList.add(DiaryType.요리일기.toString());
+        diaryTypeList.add(DiaryType.환경일기.toString());
+        diaryTypeList.add(DiaryType.자유일기.toString());
 
         List<DiaryTypeRecommendResult> results = new ArrayList<>();
         Integer id = 1;
