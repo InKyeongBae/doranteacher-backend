@@ -18,7 +18,10 @@ import org.triathlongirls.doranssam.repository.DiaryRepository;
 import org.triathlongirls.doranssam.service.S3UploaderService;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
@@ -46,6 +49,15 @@ public class DiaryImgService {
         } catch (IOException e) {
             throw new DoranssamException(DoranssamErrorCode.S3_UPLOAD_FAILED);
         }
+    }
+
+    @Transactional
+    public void saveDiaryImgUrl(DiaryImg diaryImg ,String imgUrl, String username) {
+        LocalDateTime now = LocalDateTime.now();
+        String nowStr = now.format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
+        String imgName = username + "_" + nowStr;
+        diaryImg.updateDiaryImg(imgName, imgName, imgUrl, true);
+        diaryImgRepository.save(diaryImg);
     }
 
     @Transactional

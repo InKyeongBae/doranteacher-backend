@@ -1,28 +1,25 @@
 package org.triathlongirls.doranssam.service.diaries;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
+import io.jsonwebtoken.lang.Assert;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import org.triathlongirls.doranssam.constant.DiaryStatus;
 import org.triathlongirls.doranssam.domain.diaries.Comment;
 import org.triathlongirls.doranssam.domain.diaries.Diary;
 import org.triathlongirls.doranssam.domain.diaries.DiaryImg;
 import org.triathlongirls.doranssam.domain.diaries.Text;
 import org.triathlongirls.doranssam.domain.user.User;
 import org.triathlongirls.doranssam.dto.*;
-import org.triathlongirls.doranssam.exception.DoranssamErrorCode;
-import org.triathlongirls.doranssam.exception.DoranssamException;
 import org.triathlongirls.doranssam.exception.EntityNotFoundException;
 import org.triathlongirls.doranssam.repository.DiaryRepository;
 import org.triathlongirls.doranssam.service.user.UserService;
-import org.triathlongirls.doranssam.service.S3UploaderService;
 import org.triathlongirls.doranssam.util.SecurityUtil;
 
-import java.io.File;
-import java.io.IOException;
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,8 +55,8 @@ public class DiaryService {
         if (multipartFile != null && !multipartFile.isEmpty() && !savedDiary.getWantToImage()) {
             DiaryImg diaryImg = new DiaryImg();
             diaryImg.setDiary(savedDiary);
-            diaryImgService.saveDiaryImg(diaryImg, multipartFile, username);
             savedDiary.completeUploadingImg();
+            diaryImgService.saveDiaryImg(diaryImg, multipartFile, username);
         } else if (savedDiary.getWantToImage()) {
             log.info("[일기 그림 추천] 비동기 호출");
             diaryImgService.generateRecommendImage(savedDiary);
@@ -68,10 +65,14 @@ public class DiaryService {
     }
 
 
-    public DiaryDetailResponseDto findById(Long id) {
+    public Diary findById(Long id) {
         Diary entity = diaryRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("해당 일기가 없습니다. id=" + id));
+        return entity;
+    }
 
+    public DiaryDetailResponseDto findDiary(Long id) {
+        Diary entity = findById(id);
         return DiaryDetailResponseDto.of(entity);
     }
 
@@ -140,5 +141,23 @@ public class DiaryService {
         if(!StringUtils.equals(user.getUsername(), diary.getUser().getUsername()))
             return false;
         return true;
+    }
+
+    public DiaryDetailResponseDto modifyOrder(Long diaryId, @Valid DiaryImageRequest diaryImageRequest) {
+        Diary diary = findById(diaryId);
+        DiaryStatus newImgStatus = diaryImageRequest.getImgStatus();
+        if (newImgStatus.equals(DiaryStatus.NEED_ACTION)) {
+            diary.needRecommendImgAction();
+        } else if (newImgStatus.equals(DiaryStatus.COMPLETE)) {
+            Assert.notNull(diaryImageRequest.getImgUrl(), "image Url must Not be null");
+
+            diary.completeUploadingImg();
+            String username = SecurityUtil.getCurrentUsername();
+            DiaryImg diaryImg = new DiaryImg();
+            diaryImg.setDiary(diary);
+            diaryImgService.saveDiaryImgUrl(diaryImg, diaryImageRequest.getImgUrl(), username);
+        }
+        Diary savedDiary = diaryRepository.save(diary);
+        return DiaryDetailResponseDto.of(savedDiary);
     }
 }

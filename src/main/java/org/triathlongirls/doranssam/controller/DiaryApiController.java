@@ -14,6 +14,7 @@ import org.triathlongirls.doranssam.exception.DoranssamException;
 import org.triathlongirls.doranssam.service.diaries.DiaryService;
 import org.triathlongirls.doranssam.service.diaries.FlaskService;
 
+import javax.validation.Valid;
 import java.io.File;
 import java.util.List;
 
@@ -64,7 +65,7 @@ public class DiaryApiController {
     public ApiResponse<DiaryDetailResponseDto> findById(@PathVariable Long id) {
         if (!diaryService.validateDiary(id))
             throw new DoranssamException("일기 조회 권한이 없습니다.", DoranssamErrorCode.FORBIDDEN);
-        return new ApiResponse<DiaryDetailResponseDto>().ok(List.of(diaryService.findById(id)));
+        return new ApiResponse<DiaryDetailResponseDto>().ok(List.of(diaryService.findDiary(id)));
     }
 
     @DeleteMapping("/{id}")
@@ -73,5 +74,13 @@ public class DiaryApiController {
             throw new DoranssamException("일기 삭제 권한이 없습니다.", DoranssamErrorCode.FORBIDDEN);
         diaryService.deleteById(id);
         return new ApiResponse<>().ok(List.of());
+    }
+
+    @PatchMapping("/{diaryId}")
+    public ApiResponse<DiaryDetailResponseDto> orderModify(@PathVariable Long diaryId, @RequestBody @Valid DiaryImageRequest diaryImageRequest) {
+        if (!diaryService.validateDiary(diaryId))
+            throw new DoranssamException("일기 수정 권한이 없습니다.", DoranssamErrorCode.FORBIDDEN);
+        DiaryDetailResponseDto diaryDetail = diaryService.modifyOrder(diaryId, diaryImageRequest);
+        return new ApiResponse<DiaryDetailResponseDto>().ok(List.of(diaryDetail));
     }
 }

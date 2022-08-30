@@ -1,12 +1,16 @@
 server:
-  port: 8082
+  port: 8080
 spring:
   jpa:
     show-sql: true
     properties:
       hibernate:
-        dialect : org.hibernate.dialect.MySQL57Dialect
+        dialect: org.hibernate.dialect.MySQL57Dialect
         storage_engine: innodb
+  servlet:
+    multipart:
+      maxFileSize: 50MB
+      maxRequestSize: 50MB
 jwt:
   secret: ENC(5DI/RpPe9j/mhmsfLc2BOToD5TIDseB5BoOgY4CsgV2LzYAsRu1Cd8w0fCkBvclJMdnenx6vCCGPGOtXAR1GTniL/V+AltIpFCxzGKho7vDICa5K2I+PRIBBSirnAQ8iYxdNI2vWfa1MTZ8OQ1XP8HB1keowbRP9kBZPWKndzcNpY//59PeoLRQ9IoAj2gi4IDsd4GJVDYQ=)
 jasypt:
