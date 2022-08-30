@@ -58,8 +58,7 @@ public class DiaryService {
             savedDiary.completeUploadingImg();
             diaryImgService.saveDiaryImg(diaryImg, multipartFile, username);
         } else if (savedDiary.getWantToImage()) {
-            log.info("[일기 그림 추천] 비동기 호출");
-            diaryImgService.generateRecommendImage(savedDiary);
+            savedDiary.setImgStatus(DiaryStatus.PROCESSING);
         }
         return DiarySaveResponseDto.of(savedDiary);
     }

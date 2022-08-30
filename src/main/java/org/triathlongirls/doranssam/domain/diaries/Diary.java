@@ -1,9 +1,6 @@
 package org.triathlongirls.doranssam.domain.diaries;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import org.triathlongirls.doranssam.constant.DiaryStatus;
 import org.triathlongirls.doranssam.constant.DiaryType;
 import org.triathlongirls.doranssam.domain.BaseTimeEntity;
@@ -57,6 +54,7 @@ public class Diary extends BaseTimeEntity {
     @Column(name = "has_image")
     private Boolean hasImage;
 
+    @Setter
     @Column(name = "img_status")
     @Enumerated(EnumType.STRING)
     private DiaryStatus imgStatus;
