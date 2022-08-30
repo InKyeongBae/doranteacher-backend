@@ -31,6 +31,7 @@ public class DiaryDetailResponseDto {
     private Integer step;
     private String original_text;
     private List<String> correct_text;
+    private String correct_string;
     private String comment;
     private String selectedImage;
     private String imgStatus;
@@ -58,6 +59,7 @@ public class DiaryDetailResponseDto {
                 diary.getWritingStep().getValue(),
                 diary.getText().getOriginalText(),
                 diary.getText().getCorrectText(),
+                String.join(" ", diary.getText().getCorrectText()),
                 comment,
                 diary.loadSelectedImgUrl(),
                 diary.getImgStatus().toString(),
