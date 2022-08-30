@@ -1,10 +1,16 @@
 package org.triathlongirls.doranssam.service.diaries;
 
 import lombok.RequiredArgsConstructor;
+import org.nd4j.linalg.util.LinkedMultiValueMap;
+import org.nd4j.linalg.util.MultiValueMap;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 import org.triathlongirls.doranssam.constant.DiaryQuestion;
 import org.triathlongirls.doranssam.constant.DiaryType;
 import org.triathlongirls.doranssam.dto.DiaryTypeRecommendResult;
+import org.triathlongirls.doranssam.dto.DiaryTypeWord2VecRequest;
+import org.triathlongirls.doranssam.dto.DiaryTypeWord2VecResponse;
 import org.triathlongirls.doranssam.util.dl4j.Word2VecUtil;
 
 import java.io.FileNotFoundException;
@@ -39,6 +45,45 @@ public class DiaryTypeService {
             e.printStackTrace();
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
+        }
+        return recommendResults;
+    }
+
+    public List<DiaryTypeRecommendResult> recommendDiaryTypeFromWord2VecServer(String keywords) {
+        List<String> keywordList = Arrays.asList(keywords.split(","));
+        List<String> diaryTypeList = Stream.of(DiaryType.values())
+                .map(type -> type.name().substring(0,2))
+                .collect(Collectors.toList());
+//        List<String> diaryTypes = Arrays.asList("배움", "여행", "과학", "편지", "독서", "관찰", "소식", "시청", "사물", "감상", "칭찬", "효도", "사건", "요리", "환경", "자유");
+
+        DiaryTypeWord2VecRequest diaryTypeWord2VecRequest = DiaryTypeWord2VecRequest.builder()
+                .diaryTypes(diaryTypeList)
+                .keywords(keywordList)
+                .build();
+
+        RestTemplate restTemplate = new RestTemplate();
+        String url = "http://word2vec.doranssam.com:8000/word2vec/recommend-diary-type";
+//        String url = "http://localhost:8000/word2vec/recommend-diary-type";
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<DiaryTypeWord2VecRequest> request = new HttpEntity<>(diaryTypeWord2VecRequest, headers);
+
+        ResponseEntity<DiaryTypeWord2VecResponse> response = restTemplate.exchange(
+                url,
+                HttpMethod.POST,
+                request,
+                DiaryTypeWord2VecResponse.class);
+
+        Map<String, Float> results = response.getBody().getSimilarlity();
+        // 계산 결과 정렬
+        List<Map.Entry<String, Float>> sorted_result = new ArrayList<>(results.entrySet());
+        sorted_result.sort(Map.Entry.comparingByValue(Comparator.reverseOrder()));
+
+        List<DiaryTypeRecommendResult> recommendResults = new ArrayList<>();
+        int rank = 1;
+        for (Map.Entry<String, Float> r : sorted_result) {
+            recommendResults.add(new DiaryTypeRecommendResult(r.getKey(), rank));
+            rank++;
         }
         return recommendResults;
     }

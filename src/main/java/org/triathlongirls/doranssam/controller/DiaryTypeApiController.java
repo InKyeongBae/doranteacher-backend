@@ -19,7 +19,7 @@ public class DiaryTypeApiController {
 
     @GetMapping("/recommend")
     public ApiResponse<DiaryTypeRecommendResult> diaryTypeRecommend(@RequestParam String keywords) {
-        List<DiaryTypeRecommendResult> results = diaryTypeService.recommendTempDiaryType(keywords);
+        List<DiaryTypeRecommendResult> results = diaryTypeService.recommendDiaryTypeFromWord2VecServer(keywords);
         return new ApiResponse<DiaryTypeRecommendResult>().ok(results);
     }
 
