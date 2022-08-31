@@ -3,10 +3,7 @@ package org.triathlongirls.doranssam.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
-import org.apache.http.HttpHeaders;
-import org.springframework.http.HttpEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 import org.triathlongirls.doranssam.dto.*;
 import org.triathlongirls.doranssam.exception.DoranssamErrorCode;
@@ -15,7 +12,6 @@ import org.triathlongirls.doranssam.service.diaries.DiaryService;
 import org.triathlongirls.doranssam.service.diaries.FlaskService;
 
 import javax.validation.Valid;
-import java.io.File;
 import java.util.List;
 
 @RequiredArgsConstructor

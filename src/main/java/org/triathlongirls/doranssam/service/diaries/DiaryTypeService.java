@@ -82,7 +82,7 @@ public class DiaryTypeService {
         List<DiaryTypeRecommendResult> recommendResults = new ArrayList<>();
         int rank = 1;
         for (Map.Entry<String, Float> r : sorted_result) {
-            recommendResults.add(new DiaryTypeRecommendResult(r.getKey(), rank));
+            recommendResults.add(new DiaryTypeRecommendResult(r.getKey() + "일기", rank));
             rank++;
         }
         return recommendResults;
