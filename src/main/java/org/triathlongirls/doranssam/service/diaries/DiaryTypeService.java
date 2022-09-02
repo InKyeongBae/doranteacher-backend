@@ -62,7 +62,7 @@ public class DiaryTypeService {
                 .build();
 
         RestTemplate restTemplate = new RestTemplate();
-        String url = "http://word2vec.doranssam.com:8000/word2vec/recommend-diary-type";
+        String url = "http://word2vec.doranssam.com/word2vec/recommend-diary-type";
 //        String url = "http://localhost:8000/word2vec/recommend-diary-type";
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
