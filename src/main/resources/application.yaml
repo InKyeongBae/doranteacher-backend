@@ -17,3 +17,14 @@ jasypt:
   encryptor:
     bean: jasyptStringEncryptor
     password : ${JASYPT_PASSWORD}
+cloud:
+  aws:
+    credentials:
+      accessKey: AKIASHS6Y77S3YZJV3UU
+      secretKey: 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
+    s3:
+      bucket: doran-image
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false

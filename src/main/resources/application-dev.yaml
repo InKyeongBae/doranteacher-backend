@@ -1,0 +1,6 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://doranteacher-springboot-webservice.c8dbmoyeyryd.ap-northeast-2.rds.amazonaws.com:3306/doranteacher?serverTimezone=UTC&characterEncoding=UTF-8
+    username: doran
+    password: ehfksToa2022!
